@@ -7,7 +7,7 @@
 
 ## 프로젝트 개요
 
-**컴피 (Compi)** — 한국 초중등 학생 경시대회 일정 정보 웹사이트. Django 기반으로 수학/과학/영어/코딩 경시대회 일정을 수집하고 부모·학생이 쉽게 찾을 수 있는 캘린더형 SEO 사이트.
+**컴피 (Compi)** — 한국 초중등 학생 경시대회 일정 정보 웹사이트. Astro 정적 사이트 + YAML Content Collections 기반으로 수학/과학/영어/코딩 경시대회 일정을 제공하는 SEO 중심 사이트.
 
 ### 브랜드
 - **이름**: 컴피 (Compi) — Competition + 콤팩트
@@ -53,21 +53,40 @@
   ```
 - playwright를 통해서 UI를 검증한다.
 
-## 핵심 명령어
+## 기술 스택
 
-### 개발
-```bash
-# 개발서버 실행
-uv run python manage.py runserver
+- **Astro 6.x** (정적 사이트 생성, GitHub Pages 무료 배포)
+- **Content Collections** — `data/contests/*.yml` 파일 기반 데이터 관리
+- **Tailwind CSS** (스타일링)
+- **@astrojs/sitemap** (SEO)
 
-# 데이터베이스 마이그레이션
-uv run python manage.py makemigrations
-uv run python manage.py migrate
+### 디렉토리 구조
+
+```
+compi/
+├── data/contests/      # 경시대회 YAML 데이터 (1대회 1파일)
+├── site/               # Astro 프로젝트
+│   ├── src/
+│   │   ├── content.config.ts  # Content Collection 스키마
+│   │   ├── config.ts          # 사이트 설정 (도메인 등)
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   └── pages/
+│   └── astro.config.mjs
+└── .taicki/
 ```
 
-### 배포
+## 핵심 명령어
+
 ```bash
-just deploy
+# 개발서버
+cd site && npm run dev
+
+# 빌드
+cd site && npm run build
+
+# 경시대회 데이터 추가
+# → data/contests/{id}.yml 파일 추가 후 dev 서버에서 확인
 ```
 
 ## 이슈 관리

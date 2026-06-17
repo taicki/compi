@@ -1,26 +1,17 @@
-__pycache__
-*.pyc
-*.pyo
+# Node
+node_modules/
+site/dist/
+site/.astro/
 
-*.sqlite3
-
-.idea
-
-# 환경 설정 파일
+# 환경 설정
 .env
-deploy_config.sh
+.env.local
 
-# 로그 파일
-logs/
-
-# Claude Code 로컬 메모리 파일
+# Claude Code
 .claude/settings.local.json
 .claude/worktrees/
 CLAUDE.local.md
 .playwright-mcp/
-
-# 미디어 파일
-media/
 
 # 자동 생성 리포트 (append-only)
 .taicki/reports/
