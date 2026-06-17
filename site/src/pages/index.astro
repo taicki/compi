@@ -105,6 +105,61 @@ const typeDot: Record<string, string> = {
   reg_end: "text-red-500",
   exam: "text-indigo-600 font-bold",
 };
+
+// 간트차트 데이터 계산
+const YEAR_START = new Date("2026-01-01").getTime();
+const YEAR_END = new Date("2026-12-31").getTime();
+const YEAR_MS = YEAR_END - YEAR_START + 86400000; // 365일
+
+function toPercent(dateStr: string): number {
+  const t = new Date(dateStr).getTime();
+  return Math.max(0, Math.min(100, ((t - YEAR_START) / YEAR_MS) * 100));
+}
+
+const subjectBarColor: Record<string, string> = {
+  수학: "bg-blue-400",
+  과학: "bg-green-400",
+  영어: "bg-yellow-400",
+  코딩: "bg-purple-400",
+  국어: "bg-red-400",
+  역사: "bg-orange-400",
+  종합: "bg-gray-400",
+};
+
+type GanttRow = {
+  name: string;
+  subject: string;
+  bars: Array<{ start: number; end: number; label: string; isReg: boolean }>;
+  exams: Array<{ pos: number; label: string }>;
+};
+
+const ganttRows: GanttRow[] = contests
+  .sort((a, b) => a.data.subject.localeCompare(b.data.subject, "ko"))
+  .map((c) => {
+    const bars: GanttRow["bars"] = [];
+    const exams: GanttRow["exams"] = [];
+    for (const s of c.data.schedule) {
+      if (s.registration_start && s.registration_end) {
+        bars.push({
+          start: toPercent(s.registration_start),
+          end: toPercent(s.registration_end),
+          label: s.round ?? "접수",
+          isReg: true,
+        });
+      }
+      if (s.exam_date) {
+        exams.push({ pos: toPercent(s.exam_date), label: s.round ?? "시험" });
+      }
+    }
+    return { name: c.data.name, subject: c.data.subject, bars, exams };
+  });
+
+const todayPercent = toPercent(todayStr);
+const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
+  const d = new Date(2026, m, 1);
+  return toPercent(d.toISOString().split("T")[0]);
+});
+
 ---
 
 <!doctype html>
@@ -135,6 +190,7 @@ const typeDot: Record<string, string> = {
       <!-- 섹션 탭 -->
       <div class="max-w-5xl mx-auto px-4 flex gap-4 pb-3">
         <a href="#calendar" class="text-sm font-medium text-indigo-600 border-b-2 border-indigo-600 pb-1">📅 연간 캘린더</a>
+        <a href="#timeline" class="text-sm font-medium text-gray-400 pb-1">⏱ 타임라인</a>
         <a href="#contests" class="text-sm font-medium text-gray-400 pb-1">📋 대회 목록</a>
       </div>
     </header>
@@ -216,6 +272,87 @@ const typeDot: Record<string, string> = {
               </div>
             );
           })}
+        </div>
+      </section>
+
+
+      <!-- 간트차트 타임라인 -->
+      <section id="timeline" class="mb-10">
+        <h2 class="text-base font-semibold text-gray-700 mb-1">⏱ 2026 타임라인</h2>
+        <p class="text-xs text-gray-400 mb-3">접수 기간(색상 바)과 시험일(●)을 가로 축으로 한눈에 확인하세요.</p>
+
+        <!-- 범례 -->
+        <div class="flex gap-4 text-xs text-gray-500 mb-3 flex-wrap">
+          <span class="flex items-center gap-1"><span class="w-8 h-2 bg-blue-300 rounded inline-block"></span> 접수기간</span>
+          <span class="flex items-center gap-1"><span class="text-gray-700 font-bold text-base leading-none">●</span> 시험일</span>
+          <span class="flex items-center gap-1"><span class="w-px h-4 bg-yellow-400 inline-block"></span> 오늘</span>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-x-auto">
+          <!-- 헤더: 월 눈금 -->
+          <div class="relative border-b border-gray-100 h-7" style="min-width: 640px;">
+            {monthNames.map((m, i) => (
+              <span
+                class="absolute top-1 text-xs text-gray-400 -translate-x-1/2"
+                style={`left: ${monthPercents[i]}%`}
+              >
+                {m}
+              </span>
+            ))}
+          </div>
+
+          <!-- 대회 행들 -->
+          <div style="min-width: 640px;">
+            {ganttRows.map((row, idx) => (
+              <div class={`relative flex items-center ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`} style="height: 36px;">
+                <!-- 오늘 선 -->
+                <div
+                  class="absolute top-0 bottom-0 w-px bg-yellow-300 z-10"
+                  style={`left: ${todayPercent}%`}
+                ></div>
+
+                <!-- 월 구분선 -->
+                {monthPercents.slice(1).map((p) => (
+                  <div class="absolute top-0 bottom-0 w-px bg-gray-100" style={`left: ${p}%`}></div>
+                ))}
+
+                <!-- 대회명 (고정 너비) -->
+                <div class="absolute left-0 top-0 bottom-0 flex items-center pl-2 z-20 pointer-events-none">
+                  <span class="text-xs text-gray-600 font-medium bg-white/80 pr-1 truncate" style="max-width: 130px;">{row.name}</span>
+                </div>
+
+                <!-- 접수 기간 바 -->
+                {row.bars.map((bar) => (
+                  <div
+                    class={`absolute h-3 rounded-full opacity-70 ${subjectBarColor[row.subject] ?? "bg-gray-300"}`}
+                    style={`left: calc(${bar.start}% + 0px); width: calc(${bar.end - bar.start}%); top: 50%; transform: translateY(-50%);`}
+                    title={`${row.name} 접수: ${bar.label}`}
+                  ></div>
+                ))}
+
+                <!-- 시험일 마커 -->
+                {row.exams.map((exam) => (
+                  <div
+                    class="absolute w-3 h-3 rounded-full bg-gray-700 border-2 border-white z-10"
+                    style={`left: ${exam.pos}%; top: 50%; transform: translate(-50%, -50%);`}
+                    title={`${row.name} 시험: ${exam.label}`}
+                  ></div>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          <!-- 하단 월 눈금 반복 -->
+          <div class="relative border-t border-gray-100 h-6" style="min-width: 640px;">
+            {monthNames.map((m, i) => (
+              <span
+                class="absolute bottom-1 text-xs text-gray-300 -translate-x-1/2"
+                style={`left: ${monthPercents[i]}%`}
+              >
+                {m}
+              </span>
+            ))}
+          </div>
         </div>
       </section>
 
