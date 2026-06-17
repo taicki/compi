@@ -1,0 +1,29 @@
+id: sungdae
+name: 성대경시 전국수학학력경시대회
+name_en: Sungkyunkwan Math Contest
+organizer: 글로벌영재학회
+subject: 수학
+target: [초등, 중등, 고등]
+level: 심화
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 전기
+    registration_start: null
+    registration_end: "2026-03-20"
+    exam_date: "2026-04-05"
+    result_date: null
+  - year: 2026
+    round: 후기
+    registration_start: null
+    registration_end: "2026-09-20"
+    exam_date: "2026-10-04"
+    result_date: null
+fee: 50000
+official_url: https://test.edusky.co.kr/
+summary: 성균관대·동아일보 후원, 전국 주관식 수학 경시대회. 사설 경시 중 최고 수준으로 영재고·과학고 준비 학생의 필수 코스.
+pros:
+  - 전 문항 주관식으로 수학적 서술 능력 향상
+  - 영재고·과학고 입시 실전 경험
+  - 연 2회라 재도전 기회 있음
+data_status: draft
