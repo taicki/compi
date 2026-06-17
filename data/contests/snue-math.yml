@@ -1,0 +1,28 @@
+id: snue-math
+name: 서울교대 전국초등수학창의사고력대회
+organizer: 서울교육대학교
+subject: 수학
+target: [초등]
+level: 중급
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 상반기
+    registration_start: "2026-03-10"
+    registration_end: "2026-04-21"
+    exam_date: "2026-04-26"
+    result_date: null
+  - year: 2026
+    round: 하반기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 50000
+official_url: https://www.snue.ac.kr/
+summary: 서울교대 주관 초등학생 수학 창의사고력 대회. 사범대학 주관으로 교육학적 관점의 심화 문제 출제.
+pros:
+  - 사범대 주관으로 교육적 완성도 높은 문제
+  - 초등학생 전용 대회로 또래 비교 가능
+  - 수도권 주요 초등 수학 대회 중 하나
+data_status: draft

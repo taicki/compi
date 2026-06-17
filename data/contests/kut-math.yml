@@ -1,0 +1,29 @@
+id: kut-math
+name: KUT 고려대학교 수학평가시험
+name_en: Korea University Test - Math
+organizer: 고려대학교
+subject: 수학
+target: [초등, 중등]
+level: 입문
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 상반기
+    registration_start: "2026-03-03"
+    registration_end: "2026-05-29"
+    exam_date: null
+    result_date: null
+  - year: 2026
+    round: 하반기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 35000
+official_url: https://www.koreatestsystem.com/
+summary: 고려대학교 주관 수학 평가시험. 초1~중2 대상으로 명문대 브랜드 수학 실력 인증.
+pros:
+  - 명문대 고려대 브랜드 공인 인증
+  - 응시료가 상대적으로 저렴
+  - 초등 전 학년 응시 가능
+data_status: draft

@@ -15,7 +15,7 @@ const contests = defineCollection({
     schedule: z.array(
       z.object({
         year: z.number().int(),
-        round: z.string().optional(),
+        round: z.string().nullable().optional(),
         registration_start: z.string().nullable().default(null),
         registration_end: z.string().nullable().default(null),
         exam_date: z.string().nullable().default(null),

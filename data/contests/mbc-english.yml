@@ -1,0 +1,29 @@
+id: mbc-english
+name: 전국초중영어학력평가
+name_en: MBC National English Assessment
+organizer: MBC
+subject: 영어
+target: [초등, 중등]
+level: 입문
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 전기
+    registration_start: "2026-06-01"
+    registration_end: "2026-06-21"
+    exam_date: null
+    result_date: null
+  - year: 2026
+    round: 후기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 50000
+official_url: https://www.mbcplus.com/
+summary: MBC 주관 전국 초·중등 영어 학력평가. 듣기·읽기 종합 평가로 영어 실력 공인 인증.
+pros:
+  - MBC 방송사 공신력 있는 인증
+  - 듣기·읽기 균형 잡힌 평가
+  - 초1~중3 전 학년 응시 가능
+data_status: draft

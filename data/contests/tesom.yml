@@ -1,0 +1,29 @@
+id: tesom
+name: TESOM 전국수학경시대회
+name_en: TESOM National Math Contest
+organizer: 비상교육 / 한국수학평가개발원
+subject: 수학
+target: [초등, 중등]
+level: 중급
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 경시대회
+    registration_start: "2025-12-02"
+    registration_end: "2025-12-12"
+    exam_date: "2026-01-17"
+    result_date: null
+  - year: 2026
+    round: 학력평가
+    registration_start: "2026-03-30"
+    registration_end: "2026-06-05"
+    exam_date: "2026-06-20"
+    result_date: null
+fee: 45000
+official_url: https://www.tesom.co.kr/
+summary: 비상교육 주관 초3~중3 수학 경시대회. 경시대회와 학력평가 두 트랙으로 운영, 학력평가 응시료는 별도 40,000원.
+pros:
+  - 경시대회·학력평가 두 트랙 선택 가능
+  - 비상교육 교재 연계 학습 용이
+  - 연초·연중 두 번 응시 기회
+data_status: draft

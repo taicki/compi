@@ -1,0 +1,29 @@
+id: mbc-math
+name: 전국초중수학학력평가
+name_en: MBC National Math Assessment
+organizer: MBC
+subject: 수학
+target: [초등, 중등]
+level: 입문
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 전기
+    registration_start: "2026-06-01"
+    registration_end: "2026-06-21"
+    exam_date: null
+    result_date: null
+  - year: 2026
+    round: 후기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 50000
+official_url: https://www.mbcplus.com/
+summary: MBC 주관 전국 초·중등 수학 학력평가. 방송사 주관으로 공신력이 높고 전기·후기 연 2회 시행.
+pros:
+  - MBC 브랜드로 인지도 높음
+  - 초1~중3 전 학년 응시 가능
+  - 전기·후기 연 2회 응시 기회
+data_status: draft

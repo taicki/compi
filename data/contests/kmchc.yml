@@ -1,0 +1,29 @@
+id: kmchc
+name: KMChC 한국중학생화학대회
+name_en: Korean Middle school Chemistry Competition
+organizer: 대한화학회 화학올림피아드위원회
+subject: 과학
+target: [중등]
+level: 심화
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 일반
+    registration_start: "2026-01-02"
+    registration_end: "2026-01-25"
+    exam_date: "2026-02-21"
+    result_date: null
+  - year: 2026
+    round: 심화
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 100000
+official_url: https://www.chemolympics.or.kr/
+summary: 대한화학회 주관 중학생 화학 올림피아드. 입상 시 KChO(고등부 한국화학올림피아드) 진학 및 이공계 특기자 전형에 유리.
+pros:
+  - 한국화학올림피아드(KChO) 진학 전 필수 관문
+  - 이공계 특기자 전형 핵심 스펙
+  - 일반·심화 두 단계로 수준별 도전 가능
+data_status: draft

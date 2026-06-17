@@ -1,0 +1,23 @@
+id: kjso
+name: KJSO 한국중등과학올림피아드
+name_en: Korean Junior Science Olympiad
+organizer: 한국중학생과학올림피아드
+subject: 과학
+target: [중등]
+level: 심화
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: null
+    registration_start: "2026-04-20"
+    registration_end: "2026-06-19"
+    exam_date: null
+    result_date: null
+fee: null
+official_url: https://www.kjso.or.kr/
+summary: 중학생 대상 종합 과학 올림피아드. 물리·화학·생물·지구과학 통합 문제, 무료 응시.
+pros:
+  - 무료 응시
+  - 4개 과학 분야 통합 평가로 종합 역량 점검
+  - 고등 과학 올림피아드 준비를 위한 입문 관문
+data_status: draft

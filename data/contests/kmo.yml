@@ -9,7 +9,7 @@ frequency: 연1회
 schedule:
   - year: 2026
     round: 1차
-    registration_start: null
+    registration_start: "2026-03-19"
     registration_end: "2026-04-15"
     exam_date: "2026-05-16"
     result_date: null
@@ -17,11 +17,11 @@ schedule:
     round: 2차
     registration_start: null
     registration_end: null
-    exam_date: "2026-11-07"
+    exam_date: null
     result_date: null
-fee: 60000
+fee: 70000
 official_url: https://www.kms.or.kr/
-summary: 국내 수학경시대회 최고 난이도. 최종 입상자는 국제수학올림피아드(IMO) 국가대표로 선발될 수 있다.
+summary: 국내 수학경시대회 최고 난이도. 최종 입상자는 국제수학올림피아드(IMO) 국가대표로 선발될 수 있다. 2차 응시료 별도 50,000원.
 pros:
   - IMO 국가대표 선발 루트
   - 최상위권 수학 실력 검증

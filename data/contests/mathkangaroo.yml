@@ -1,0 +1,23 @@
+id: mathkangaroo
+name: 매쓰캥거루 국제수학경시대회
+name_en: Math Kangaroo
+organizer: 허브에듀케이션
+subject: 수학
+target: [초등, 중등, 고등]
+level: 중급
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: null
+    registration_start: null
+    registration_end: "2026-02-28"
+    exam_date: "2026-04-04"
+    result_date: null
+fee: 25000
+official_url: https://www.mathkangaroo.kr/
+summary: 세계 93개국이 참여하는 국제 수학 경시대회 한국 대표선발전. 유치~고등 전 학년 참가 가능, 선다형 문제.
+pros:
+  - 세계 93개국 동시 시행으로 국제 비교 가능
+  - 유치~고등 전 연령 참가 가능
+  - 응시료가 저렴하고 진입 장벽 낮음
+data_status: draft

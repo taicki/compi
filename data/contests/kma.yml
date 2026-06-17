@@ -1,7 +1,7 @@
 id: kma
 name: KMA 한국수학학력평가
 name_en: Korea Math Assessment
-organizer: 에듀왕
+organizer: 한국수학학력평가연구원 / (주)에듀왕
 subject: 수학
 target: [초등, 중등]
 level: 입문
@@ -9,17 +9,17 @@ frequency: 연2회
 schedule:
   - year: 2026
     round: 상반기
-    registration_start: null
+    registration_start: "2026-03-01"
     registration_end: "2026-05-31"
-    exam_date: "2026-06-20"
+    exam_date: null
     result_date: null
   - year: 2026
     round: 하반기
     registration_start: null
-    registration_end: "2026-10-31"
-    exam_date: "2026-11-21"
+    registration_end: null
+    exam_date: null
     result_date: null
-fee: 30000
+fee: 40000
 official_url: https://www.kma-e.com/
 summary: 교과 기본·응용·심화·창의사고력 4단계로 구성된 수학 학력평가. HME와 함께 입문 경시대회의 양대 산맥.
 pros:

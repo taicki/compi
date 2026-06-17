@@ -1,7 +1,7 @@
 id: kjmo
 name: KJMO 한국주니어수학올림피아드
 name_en: Korean Junior Mathematical Olympiad
-organizer: 대한수학회
+organizer: 대한수학회 / 한국수학올림피아드위원회
 subject: 수학
 target: [초등, 중등]
 level: 심화
@@ -9,11 +9,11 @@ frequency: 연1회
 schedule:
   - year: 2026
     round: null
-    registration_start: null
-    registration_end: null
+    registration_start: "2026-06-17"
+    registration_end: "2026-07-28"
     exam_date: "2026-08-29"
     result_date: null
-fee: 60000
+fee: 70000
 official_url: https://www.kms.or.kr/
 summary: 대한수학회 주관, 중1 이하 대상 올림피아드형 수학 경시대회. 초등학생이 도전할 수 있는 국내 최고 난이도 대회.
 pros:

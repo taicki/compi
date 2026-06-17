@@ -1,0 +1,29 @@
+id: koi
+name: KOI 한국정보올림피아드
+name_en: Korean Olympiad in Informatics
+organizer: 한국지능정보사회진흥원
+subject: 코딩
+target: [초등, 중등, 고등]
+level: 심화
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: 1차
+    registration_start: "2026-04-13"
+    registration_end: "2026-04-29"
+    exam_date: "2026-05-10"
+    result_date: null
+  - year: 2026
+    round: 2차
+    registration_start: null
+    registration_end: null
+    exam_date: "2026-07-18"
+    result_date: null
+fee: 70000
+official_url: https://www.digitalculture.or.kr/
+summary: 과학기술정보통신부 후원 국내 최고 권위 정보올림피아드. 입상 시 정보영재 및 과학고 가산점.
+pros:
+  - 국내 코딩 경시 최고 권위
+  - 입상 시 과학고·영재고 입시 가산점
+  - 국제정보올림피아드(IOI) 대표선발 루트
+data_status: draft

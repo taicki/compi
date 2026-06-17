@@ -1,25 +1,25 @@
 id: hme
 name: HME 해법수학경시대회
 name_en: HME Math Competition
-organizer: 천재교육
+organizer: 천재교육 / 한국학력평가인증연구소
 subject: 수학
 target: [초등, 중등]
 level: 입문
 frequency: 연2회
 schedule:
   - year: 2026
-    round: 상반기
-    registration_start: "2026-03-01"
-    registration_end: "2026-04-15"
-    exam_date: "2026-05-10"
-    result_date: "2026-06-05"
+    round: 전기
+    registration_start: "2026-03-03"
+    registration_end: "2026-05-31"
+    exam_date: null
+    result_date: null
   - year: 2026
-    round: 하반기
-    registration_start: "2026-08-01"
-    registration_end: "2026-09-15"
-    exam_date: "2026-10-11"
-    result_date: "2026-11-07"
-fee: 15000
+    round: 후기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 40000
 official_url: https://hme.chunjae.co.kr/
 summary: 경시대회 입문에 적합한 전국 단위 수학 학력평가. 예선·본선 2단계 구성으로 수상 기회가 넓다.
 pros:

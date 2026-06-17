@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import "../styles/global.css";
 import { SITE_NAME, SITE_TAGLINE } from "../config.ts";
+import "../styles/global.css";
 
 const contests = await getCollection("contests");
 
@@ -15,31 +15,96 @@ const subjectColors: Record<string, string> = {
   종합: "bg-gray-100 text-gray-800",
 };
 
+const subjectDot: Record<string, string> = {
+  수학: "bg-blue-400",
+  과학: "bg-green-400",
+  영어: "bg-yellow-400",
+  코딩: "bg-purple-400",
+  국어: "bg-red-400",
+  역사: "bg-orange-400",
+  종합: "bg-gray-400",
+};
+
 const levelLabels: Record<string, string> = {
   입문: "🌱 입문",
   중급: "⭐ 중급",
   심화: "🔥 심화",
 };
 
-// 가장 가까운 다음 시험 날짜 계산
-function getNextExam(schedule: typeof contests[0]["data"]["schedule"]) {
-  const today = new Date().toISOString().split("T")[0];
-  const upcoming = schedule
-    .filter((s) => s.exam_date && s.exam_date >= today)
-    .sort((a, b) => (a.exam_date! > b.exam_date! ? 1 : -1));
-  return upcoming[0] ?? null;
-}
+const TODAY = new Date();
+TODAY.setHours(0, 0, 0, 0);
+const todayStr = TODAY.toISOString().split("T")[0];
 
 function getDday(dateStr: string | null): string {
   if (!dateStr) return "";
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = new Date(); today.setHours(0,0,0,0);
   const target = new Date(dateStr);
-  const diff = Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+  const diff = Math.ceil((target.getTime() - today.getTime()) / 86400000);
   if (diff === 0) return "D-Day";
   if (diff > 0) return `D-${diff}`;
   return `D+${Math.abs(diff)}`;
 }
+
+function getNextExam(schedule: typeof contests[0]["data"]["schedule"]) {
+  const upcoming = schedule
+    .filter((s) => s.exam_date && s.exam_date >= todayStr)
+    .sort((a, b) => (a.exam_date! > b.exam_date! ? 1 : -1));
+  return upcoming[0] ?? null;
+}
+
+// 월별 이벤트 계산 (접수시작·접수마감·시험일)
+type CalEvent = {
+  name: string;
+  subject: string;
+  type: "reg_start" | "reg_end" | "exam";
+  date: string;
+  month: number;
+  day: number;
+};
+
+const calEvents: CalEvent[] = [];
+for (const c of contests) {
+  for (const s of c.data.schedule) {
+    const base = { name: c.data.name, subject: c.data.subject };
+    if (s.registration_start) {
+      const d = new Date(s.registration_start);
+      calEvents.push({ ...base, type: "reg_start", date: s.registration_start, month: d.getMonth(), day: d.getDate() });
+    }
+    if (s.registration_end) {
+      const d = new Date(s.registration_end);
+      calEvents.push({ ...base, type: "reg_end", date: s.registration_end, month: d.getMonth(), day: d.getDate() });
+    }
+    if (s.exam_date) {
+      const d = new Date(s.exam_date);
+      calEvents.push({ ...base, type: "exam", date: s.exam_date, month: d.getMonth(), day: d.getDate() });
+    }
+  }
+}
+
+const monthNames = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+const todayMonth = TODAY.getMonth();
+const todayDay = TODAY.getDate();
+
+// 월별 그룹핑
+const byMonth: Record<number, CalEvent[]> = {};
+for (const e of calEvents) {
+  if (!byMonth[e.month]) byMonth[e.month] = [];
+  byMonth[e.month].push(e);
+}
+for (const m of Object.keys(byMonth)) {
+  byMonth[Number(m)].sort((a, b) => a.day - b.day);
+}
+
+const typeLabel: Record<string, string> = {
+  reg_start: "접수시작",
+  reg_end: "접수마감",
+  exam: "시험",
+};
+const typeDot: Record<string, string> = {
+  reg_start: "text-green-600",
+  reg_end: "text-red-500",
+  exam: "text-indigo-600 font-bold",
+};
 ---
 
 <!doctype html>
@@ -62,112 +127,180 @@ function getDday(dateStr: string | null): string {
           <h1 class="text-2xl font-bold text-indigo-600">{SITE_NAME}</h1>
           <p class="text-sm text-gray-500">{SITE_TAGLINE}</p>
         </div>
-        <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">베타</span>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-400">{todayStr}</span>
+          <span class="text-xs bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full font-medium">베타</span>
+        </div>
+      </div>
+      <!-- 섹션 탭 -->
+      <div class="max-w-5xl mx-auto px-4 flex gap-4 pb-3">
+        <a href="#calendar" class="text-sm font-medium text-indigo-600 border-b-2 border-indigo-600 pb-1">📅 연간 캘린더</a>
+        <a href="#contests" class="text-sm font-medium text-gray-400 pb-1">📋 대회 목록</a>
       </div>
     </header>
 
-    <!-- Main -->
-    <main class="max-w-5xl mx-auto px-4 py-8">
+    <main class="max-w-5xl mx-auto px-4 py-6">
 
       <!-- 통계 요약 -->
-      <div class="grid grid-cols-3 gap-4 mb-8">
+      <div class="grid grid-cols-3 gap-3 mb-6">
         <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
           <div class="text-3xl font-bold text-indigo-600">{contests.length}</div>
-          <div class="text-sm text-gray-500 mt-1">등록된 경시대회</div>
+          <div class="text-xs text-gray-500 mt-1">등록된 경시대회</div>
         </div>
         <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
           <div class="text-3xl font-bold text-green-600">
             {contests.filter(c => getNextExam(c.data.schedule)).length}
           </div>
-          <div class="text-sm text-gray-500 mt-1">일정 확정 대회</div>
+          <div class="text-xs text-gray-500 mt-1">앞으로 시험 예정</div>
         </div>
         <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
-          <div class="text-3xl font-bold text-orange-600">2026</div>
-          <div class="text-sm text-gray-500 mt-1">업데이트 기준 연도</div>
+          <div class="text-sm font-bold text-orange-600">{todayMonth + 1}월 {todayDay}일</div>
+          <div class="text-xs text-gray-500 mt-1">오늘</div>
+          <div class="text-xs text-orange-500 mt-0.5 font-medium">
+            {byMonth[todayMonth]?.filter(e => e.day === todayDay).length > 0
+              ? `오늘 ${byMonth[todayMonth].filter(e => e.day === todayDay).length}개 이벤트`
+              : "일정 없음"}
+          </div>
         </div>
       </div>
 
-      <!-- 경시대회 목록 -->
-      <h2 class="text-lg font-semibold text-gray-700 mb-4">전체 경시대회</h2>
-      <div class="grid gap-4">
-        {contests.map((contest) => {
-          const d = contest.data;
-          const nextExam = getNextExam(d.schedule);
-          const dday = nextExam?.exam_date ? getDday(nextExam.exam_date) : null;
-          return (
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
-              <div class="flex items-start justify-between gap-4">
-                <div class="flex-1 min-w-0">
-                  <!-- 이름 + 배지 -->
-                  <div class="flex items-center gap-2 flex-wrap mb-1">
-                    <h3 class="text-base font-bold text-gray-900">{d.name}</h3>
-                    <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}>
-                      {d.subject}
-                    </span>
-                    <span class="text-xs text-gray-500">{levelLabels[d.level]}</span>
-                  </div>
-                  <!-- 주관 + 대상 -->
-                  <p class="text-sm text-gray-500 mb-2">
-                    {d.organizer} · 대상: {d.target.join("·")} · {d.frequency}
-                  </p>
-                  <!-- 한줄 소개 -->
-                  <p class="text-sm text-gray-600 mb-3">{d.summary}</p>
-                  <!-- 일정 -->
-                  {d.schedule.map((s) => (
-                    <div class="text-xs text-gray-500 bg-gray-50 rounded-lg p-3 mb-2 grid grid-cols-2 gap-x-4 gap-y-1">
-                      <div class="font-medium text-gray-700 col-span-2">
-                        {s.year}년 {s.round ? `${s.round}` : ""}
-                      </div>
-                      {s.registration_start && (
-                        <div>📋 접수 시작: <span class="text-gray-800">{s.registration_start}</span></div>
-                      )}
-                      {s.registration_end && (
-                        <div>📋 접수 마감: <span class="text-gray-800">{s.registration_end}</span></div>
-                      )}
-                      {s.exam_date && (
-                        <div>📝 시험일: <span class="text-gray-800 font-medium">{s.exam_date}</span></div>
-                      )}
-                      {s.result_date && (
-                        <div>🏆 결과 발표: <span class="text-gray-800">{s.result_date}</span></div>
-                      )}
-                    </div>
-                  ))}
+      <!-- 연간 캘린더 -->
+      <section id="calendar" class="mb-10">
+        <h2 class="text-base font-semibold text-gray-700 mb-3">📅 2026 연간 캘린더</h2>
+
+        <!-- 범례 -->
+        <div class="flex gap-4 text-xs text-gray-500 mb-4 flex-wrap">
+          <span class="flex items-center gap-1"><span class="text-green-600 font-medium">●</span> 접수시작</span>
+          <span class="flex items-center gap-1"><span class="text-red-500 font-medium">●</span> 접수마감</span>
+          <span class="flex items-center gap-1"><span class="text-indigo-600 font-bold">●</span> 시험일</span>
+          <span class="flex items-center gap-1 ml-2"><span class="w-3 h-3 bg-yellow-200 rounded-sm inline-block"></span> 오늘</span>
+        </div>
+
+        <!-- 12개월 그리드 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {monthNames.map((mName, mIdx) => {
+            const events = byMonth[mIdx] ?? [];
+            const isCurrentMonth = mIdx === todayMonth;
+            const isPast = mIdx < todayMonth;
+            return (
+              <div class={`bg-white rounded-xl border shadow-sm overflow-hidden ${isCurrentMonth ? "ring-2 ring-indigo-400" : ""} ${isPast ? "opacity-60" : ""}`}>
+                <div class={`px-4 py-2 flex items-center justify-between ${isCurrentMonth ? "bg-indigo-50" : "bg-gray-50"}`}>
+                  <span class={`font-semibold text-sm ${isCurrentMonth ? "text-indigo-700" : "text-gray-600"}`}>
+                    {mName}
+                    {isCurrentMonth && <span class="ml-1 text-xs bg-indigo-600 text-white px-1.5 py-0.5 rounded-full">이번달</span>}
+                  </span>
+                  <span class="text-xs text-gray-400">{events.length > 0 ? `${events.length}개 일정` : "일정 없음"}</span>
                 </div>
-                <!-- 우측: D-day + 응시료 + 링크 -->
-                <div class="flex flex-col items-end gap-2 shrink-0">
-                  {dday && (
-                    <span class={`text-sm font-bold px-3 py-1 rounded-full ${dday === "D-Day" ? "bg-red-100 text-red-600" : dday.startsWith("D-") ? "bg-indigo-100 text-indigo-700" : "bg-gray-100 text-gray-500"}`}>
-                      시험 {dday}
-                    </span>
-                  )}
-                  {d.fee !== null && (
-                    <span class="text-xs text-gray-500">응시료 {d.fee.toLocaleString()}원</span>
-                  )}
-                  <a
-                    href={d.official_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
-                  >
-                    공식 사이트 →
-                  </a>
-                </div>
+                {events.length > 0 ? (
+                  <ul class="divide-y divide-gray-50">
+                    {events.map((e) => {
+                      const isToday = isCurrentMonth && e.day === todayDay;
+                      return (
+                        <li class={`px-4 py-2 flex items-start gap-2 text-xs ${isToday ? "bg-yellow-50" : ""}`}>
+                          <span class={`shrink-0 font-mono w-6 text-right ${isCurrentMonth && e.day < todayDay ? "text-gray-300" : "text-gray-500"}`}>
+                            {e.day}일
+                          </span>
+                          <span class={`shrink-0 w-12 ${typeDot[e.type]}`}>{typeLabel[e.type]}</span>
+                          <span class="flex items-center gap-1 min-w-0">
+                            <span class={`shrink-0 w-1.5 h-1.5 rounded-full ${subjectDot[e.subject]}`}></span>
+                            <span class="text-gray-700 truncate">{e.name}</span>
+                          </span>
+                          {isToday && <span class="shrink-0 text-yellow-600 font-bold">← 오늘</span>}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                ) : (
+                  <div class="px-4 py-3 text-xs text-gray-300">이번 달 등록된 경시대회 일정이 없습니다.</div>
+                )}
               </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {contests.length === 0 && (
-        <div class="text-center py-20 text-gray-400">
-          <p class="text-4xl mb-3">📭</p>
-          <p>등록된 경시대회가 없습니다.</p>
+            );
+          })}
         </div>
-      )}
+      </section>
+
+      <!-- 대회 목록 -->
+      <section id="contests">
+        <h2 class="text-base font-semibold text-gray-700 mb-3">📋 전체 경시대회</h2>
+        <div class="grid gap-4">
+          {contests
+            .sort((a, b) => {
+              const an = getNextExam(a.data.schedule);
+              const bn = getNextExam(b.data.schedule);
+              if (!an && !bn) return 0;
+              if (!an) return 1;
+              if (!bn) return -1;
+              return an.exam_date! > bn.exam_date! ? 1 : -1;
+            })
+            .map((contest) => {
+              const d = contest.data;
+              const nextExam = getNextExam(d.schedule);
+              const dday = nextExam?.exam_date ? getDday(nextExam.exam_date) : null;
+              return (
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
+                  <div class="flex items-start justify-between gap-4">
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-center gap-2 flex-wrap mb-1">
+                        <h3 class="text-base font-bold text-gray-900">{d.name}</h3>
+                        <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}>
+                          {d.subject}
+                        </span>
+                        <span class="text-xs text-gray-500">{levelLabels[d.level]}</span>
+                      </div>
+                      <p class="text-sm text-gray-500 mb-2">
+                        {d.organizer} · 대상: {d.target.join("·")} · {d.frequency}
+                      </p>
+                      <p class="text-sm text-gray-600 mb-3">{d.summary}</p>
+                      {d.schedule.map((s) => (
+                        <div class="text-xs text-gray-500 bg-gray-50 rounded-lg p-3 mb-2 grid grid-cols-2 gap-x-4 gap-y-1">
+                          <div class="font-medium text-gray-700 col-span-2">
+                            {s.year}년 {s.round ? `${s.round}` : ""}
+                          </div>
+                          {s.registration_start && (
+                            <div>📋 접수 시작: <span class="text-gray-800">{s.registration_start}</span></div>
+                          )}
+                          {s.registration_end && (
+                            <div>📋 접수 마감: <span class="text-gray-800">{s.registration_end}</span></div>
+                          )}
+                          {s.exam_date && (
+                            <div>📝 시험일: <span class="text-gray-800 font-medium">{s.exam_date}</span></div>
+                          )}
+                          {s.result_date && (
+                            <div>🏆 결과 발표: <span class="text-gray-800">{s.result_date}</span></div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <div class="flex flex-col items-end gap-2 shrink-0">
+                      {dday && (
+                        <span class={`text-sm font-bold px-3 py-1 rounded-full ${dday === "D-Day" ? "bg-red-100 text-red-600" : dday.startsWith("D-") ? "bg-indigo-100 text-indigo-700" : "bg-gray-100 text-gray-500"}`}>
+                          시험 {dday}
+                        </span>
+                      )}
+                      {d.fee !== null ? (
+                        <span class="text-xs text-gray-500">응시료 {d.fee.toLocaleString()}원</span>
+                      ) : (
+                        <span class="text-xs text-green-600 font-medium">무료</span>
+                      )}
+                      <a
+                        href={d.official_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
+                      >
+                        공식 사이트 →
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </section>
     </main>
 
     <footer class="text-center text-xs text-gray-400 py-8 mt-4">
-      © 2026 {SITE_NAME} · 데이터 오류 제보 환영
+      © 2026 {SITE_NAME} · 데이터 오류 제보 환영 · 출처: contestkorea.com
     </footer>
   </body>
 </html>

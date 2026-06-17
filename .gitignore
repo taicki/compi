@@ -15,3 +15,5 @@ CLAUDE.local.md
 
 # 자동 생성 리포트 (append-only)
 .taicki/reports/
+**/__pycache__/
+*.pyc

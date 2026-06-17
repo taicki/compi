@@ -1,25 +1,31 @@
 id: kmc
-name: KMC 한국수학경시대회
+name: KMC 한국수학인증시험
 name_en: Korea Mathematics Contest
-organizer: 한국수학교육학회
+organizer: 한국수학교육학회 / 한국수학교육평가원
 subject: 수학
 target: [초등, 중등, 고등]
 level: 중급
-frequency: 연1회
+frequency: 연2회
 schedule:
   - year: 2026
-    round: 예선
-    registration_start: null
-    registration_end: "2026-04-30"
-    exam_date: "2026-05-23"
+    round: 전기 예선
+    registration_start: "2026-03-09"
+    registration_end: null
+    exam_date: "2026-05-17"
     result_date: null
   - year: 2026
-    round: 본선
+    round: 전기 본선
     registration_start: null
     registration_end: null
-    exam_date: "2026-06-27"
+    exam_date: "2026-06-14"
     result_date: null
-fee: 50000
+  - year: 2026
+    round: 후기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 70000
 official_url: https://www.kmath.or.kr/
 summary: 예선·본선 2단계 구조의 사고력 수학 경시대회. 초3부터 고3까지 같은 학년 풀에서 경쟁하며, 제한 시간 내 심도 있는 문제 풀이가 요구된다.
 pros:

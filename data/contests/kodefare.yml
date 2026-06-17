@@ -1,0 +1,29 @@
+id: kodefare
+name: 한국코드페어
+name_en: Korea Code Fair
+organizer: 한국정보화진흥원
+subject: 코딩
+target: [초등, 중등, 고등]
+level: 중급
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: SW공모전
+    registration_start: "2026-05-25"
+    registration_end: "2026-06-15"
+    exam_date: null
+    result_date: null
+  - year: 2026
+    round: 해커톤
+    registration_start: "2026-07-13"
+    registration_end: "2026-08-18"
+    exam_date: null
+    result_date: null
+fee: null
+official_url: https://www.codefair.kr/
+summary: 과기정통부 주관 무료 SW 경진대회. 공모전·해커톤 두 트랙으로 운영, 창의적 SW 프로젝트 중심.
+pros:
+  - 무료 응시
+  - 공모전·해커톤 두 트랙 선택 가능
+  - 실생활 문제 해결 프로젝트 역량 강화
+data_status: draft

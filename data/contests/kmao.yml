@@ -1,0 +1,29 @@
+id: kmao
+name: KMAO 왕수학 전국경시대회
+name_en: Korea Math Assessment Olympiad
+organizer: (주)에듀왕
+subject: 수학
+target: [초등, 중등]
+level: 중급
+frequency: 연2회
+schedule:
+  - year: 2026
+    round: 상반기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+  - year: 2026
+    round: 하반기
+    registration_start: null
+    registration_end: null
+    exam_date: null
+    result_date: null
+fee: 40000
+official_url: https://www.kma-e.com/
+summary: 에듀왕 주관 초3~중3 대상 전국 수학 경시대회. KMA(학력평가)보다 난이도 높은 심화 경시 형태.
+pros:
+  - KMA와 동일 기관 운영으로 연계 학습 용이
+  - 경시대회형 문제로 사고력 향상
+  - 수상 실적이 영재교육원 자기소개서에 활용 가능
+data_status: draft
