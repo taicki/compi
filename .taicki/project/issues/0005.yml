@@ -1,0 +1,28 @@
+id: "0005"
+title: "draft 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
+status: open
+priority: medium
+labels: [data, content]
+created_at: "2026-06-18"
+body: |
+  ## 현상
+  kmo.yml 확인 시 `data_status: draft`이고 2차 시험 일정이 null.
+  다른 파일들도 상당수 불완전할 가능성이 있다.
+  경시대회 일정 오류는 신뢰도 타격 → 재방문율 0으로 직결된다.
+
+  ## 격자 근거
+  레이어 1 (Mom Test): 학부모가 이 사이트를 "고용"하는 이유는
+  정확한 일정 확인이다. 부정확한 데이터는 JTBD를 못 푸는 것이다.
+  CLAUDE.md 그라운드 룰: "데이터 정확성 최우선 — 공식 사이트 1차 확인 필수"
+
+  ## 해결 방향
+  1. 20개 YAML 파일 전수 확인 — data_status: draft 목록화
+  2. 각 대회 공식 URL에서 2026년 일정 크로스체크
+  3. null 항목 채우기 (특히 exam_date, result_date)
+  4. data_status: confirmed로 업데이트 후 sources 필드에 확인 URL 기록
+  5. 자동 확인이 어려운 대회는 data_status: unconfirmed로 표시 + 페이지에 안내 문구
+
+  ## 완료 기준
+  - 20개 대회 중 2026년 일정 확인 완료 비율 80%+
+  - confirmed/unconfirmed 상태 명확히 구분
+  - unconfirmed 페이지에 "일정 미확인" 배너 표시

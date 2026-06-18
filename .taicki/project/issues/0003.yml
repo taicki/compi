@@ -1,0 +1,29 @@
+id: "0003"
+title: "GA4 + Google Search Console 설치 — 측정 도구 구축"
+status: open
+priority: high
+labels: [analytics, seo]
+created_at: "2026-06-18"
+body: |
+  ## 현상
+  현재 어떤 측정 도구도 없다. 방문자 수, 검색 노출, 클릭률, 이탈률
+  어느 것도 알 수 없는 상태다.
+
+  ## 격자 근거
+  레이어 2 (측정): 콘텐츠 사이트의 맞는 자는 "신규 유입(SEO)".
+  측정 없이는 어떤 대회 페이지가 유효한지, 어떤 키워드가 트래픽을 주는지
+  알 방법이 없다. AARRR 깔때기 진단 자체가 불가능하다.
+
+  ## 해결 방향
+  1. Google Analytics 4 계정 생성 + Measurement ID 발급
+  2. astro.config.mjs 또는 Layout 컴포넌트에 GA4 스크립트 삽입
+  3. Google Search Console 등록 → sitemap.xml 제출
+  4. 핵심 이벤트 정의:
+     - 대회 상세 페이지 조회
+     - 공식 사이트 링크 클릭 (외부 이탈)
+     - 접수 링크 클릭
+
+  ## 완료 기준
+  - GA4 Realtime 대시보드에서 방문 확인
+  - GSC에 sitemap 제출 완료
+  - 접수 링크 클릭 이벤트 추적 동작 확인

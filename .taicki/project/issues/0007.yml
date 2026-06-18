@@ -1,0 +1,35 @@
+id: "0007"
+title: "도메인 구입 + nginx 독립 서비스 전환 — taicki.dev 서브패스 탈출"
+status: blocked
+priority: high
+labels: [infra, deploy, branding]
+created_at: "2026-06-18"
+blocked_reason: "#0006 브랜드/도메인 이름 확정 필요 (티제이님 액션)"
+body: |
+  ## 현상
+  #0002에서 taicki.dev/compi/ 서브패스로 임시 배포 후, 도메인 확정 시 독립 URL로 전환한다.
+  도메인 없이는 GSC 독립 프로퍼티 등록, SEO 권위 축적 모두 불가능하다.
+
+  ## 의존
+  - #0006 브랜드/도메인 이름 확정 (블로커)
+
+  ## 티제이님 액션
+  1. #0006 결정 후 도메인 구매 (메가존/HOSTING.KR — gorunning.kr/artcue.kr/bokrilab.kr 동일 방식)
+  2. Cloudflare에 도메인 추가 → 네임서버 변경 (메가존 → Cloudflare NS 위임)
+
+  ## 에이전트 작업 (도메인 구입 후)
+  1. astro.config.mjs: `site: "https://{domain}.kr"`, `base: "/"` 로 변경
+  2. site/src/config.ts: SITE_URL 업데이트 (단일 출처이므로 1줄 수정)
+  3. server-management 레포에 nginx 서비스 추가:
+     - 기존 패턴: gorunning.service (port 8001), artcue.service (port 8002)
+     - 참고: ~/w/code/personal/server-management/
+  4. Cloudflare DNS: A 레코드 → EC2 IP 연결 + Proxied 설정
+  5. SSL: nginx에서 Cloudflare 오리진 인증서 또는 Let's Encrypt 적용
+  6. scripts/deploy.sh 배포 경로 /projects/compi/ → /{domain}/ 로 변경
+  7. server-management/docs/domains.md에 신규 도메인 항목 추가
+
+  ## 완료 기준
+  - https://{domain}.kr/ 에서 컴피 사이트 접근 가능
+  - GSC 독립 프로퍼티 등록 완료 (#0003 연계)
+  - taicki.dev/compi/ → {domain}.kr 301 리다이렉트 설정
+  - server-management/docs/domains.md 업데이트

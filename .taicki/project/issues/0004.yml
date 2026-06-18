@@ -1,0 +1,35 @@
+id: "0004"
+title: "과목별 필러 페이지 + 학년별 필터 페이지 생성 — Pillar-Cluster 구조"
+status: open
+priority: medium
+labels: [seo, feature]
+created_at: "2026-06-18"
+body: |
+  ## 현상
+  20개 대회 데이터가 index 한 페이지에 나열되어 있고, 과목별·학년별로
+  토픽 권위를 쌓는 구조가 없다. "초등 수학 경시대회", "중학생 영어 경시대회"
+  같은 헤드 키워드를 공략할 필러 페이지가 없다.
+
+  ## 격자 근거
+  레이어 4 (Pillar-Cluster): 콘텐츠를 흩뿌리는 게 아니라 토픽 클러스터로
+  권위를 쌓아야 SEO 복리가 동작한다.
+  레이어 3 (AARRR Acquisition): 헤드 키워드 + 롱테일 개별 페이지 조합이
+  SEO 트래픽 깔때기의 시작점이다.
+
+  ## 해결 방향
+  필러 페이지 후보:
+  - /subjects/math/ (수학 경시대회 모음)
+  - /subjects/science/ (과학 경시대회)
+  - /subjects/english/ (영어 경시대회)
+  - /subjects/coding/ (코딩 경시대회)
+  - /levels/elementary/ (초등)
+  - /levels/middle/ (중등)
+  - /levels/high/ (고등)
+
+  각 필러 페이지: H1 + 설명 텍스트 200자+ + 해당 대회 카드 목록
+  내부 링크: 필러→클러스터(대회 상세), 클러스터→필러 상호 연결
+
+  ## 완료 기준
+  - 4개 과목 필러 페이지 생성 + 각 대회 카드 목록
+  - 대회 상세 페이지에서 과목/학년 필러로 내부 링크 포함
+  - Google Search Console 인덱싱 확인 (배포 이후)

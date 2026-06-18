@@ -21,3 +21,9 @@
     ## 요약
     - 🚧 티제이님: #{번호} {제목} — {구체적 행동} (blocked 0이면 이 줄 생략)
     - 오픈 {N}개 / 블로킹 {M}개
+
+- name: issue-solver
+  title: 이슈 해결 에이전트 (14:30)
+  cron: 30 14 * * *
+  enabled: true
+  prompt_file: .taicki/project/operator/solver-prompt.md

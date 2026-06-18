@@ -1,3 +1,41 @@
-open: []
+open:
+  - id: "0001"
+    title: "경시대회별 개별 상세 페이지 생성 — 롱테일 SEO 진입점 확보"
+    priority: high
+    labels: [seo, feature]
+  - id: "0002"
+    title: "taicki.dev/compi/ 서브패스 배포 — 도메인 확정 전 임시 런칭"
+    priority: high
+    labels: [infra, deploy]
+  - id: "0003"
+    title: "GA4 + Google Search Console 설치 — 측정 도구 구축"
+    priority: high
+    labels: [analytics, seo]
+  - id: "0004"
+    title: "과목별 필러 페이지 + 학년별 필터 페이지 생성 — Pillar-Cluster 구조"
+    priority: medium
+    labels: [seo, feature]
+  - id: "0005"
+    title: "draft 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
+    priority: medium
+    labels: [data, content]
+  - id: "0006"
+    title: "사이트 이름 + 브랜드 아이덴티티 확정 — 도메인 구입 전제"
+    priority: high
+    labels: [branding, setup]
+
 in_progress: []
-blocked: []
+
+blocked:
+  - id: "0007"
+    title: "도메인 구입 + nginx 독립 서비스 전환 — taicki.dev 서브패스 탈출"
+    priority: high
+    labels: [infra, deploy, branding]
+    blocked_reason: "#0006 브랜드/도메인 이름 확정 필요 (티제이님 액션)"
+
+# 격자 평가 (2026-06-18)
+# 레이어 0: Search 모드 — MVP 있으나 미배포. 빠른 배포+GSC가 최우선 학습
+# 레이어 1: PSF 미검증 — JTBD(일정 원스톱)는 유효, 실사용자 데이터 없음
+# 레이어 2: 측정 전무 — GA4/GSC 없음, SEO 신규유입 측정 시작해야
+# 레이어 3: 유통 취약 — 단일 index, 롱테일 진입불가, Pillar-Cluster 없음
+# 레이어 4: 기회비용 — 현재 유일 진행 프로젝트, 빠른 실행이 최선
