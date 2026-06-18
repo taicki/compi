@@ -97,7 +97,7 @@ ICE = Impact × Confidence × Ease (최대 27점). 동점이면 Ease 높은 쪽 
    SESSION_ID=$(ls -t ~/.claude/projects/-Users-taekjookim-w-code-personal-compi/*.jsonl 2>/dev/null | head -1 | xargs basename 2>/dev/null | sed 's/\.jsonl//')
    ```
    커밋 footer에 `Session: ${SESSION_ID}` 포함 + `git push`
-6. **GitHub Pages 배포**: push 후 자동 배포 (GitHub Actions 없으면 main push로 자동 트리거)
+   (배포 설정은 CLAUDE.md 참조 — 아직 미구성이면 빌드 확인 후 커밋만)
 
 ---
 
