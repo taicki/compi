@@ -1,26 +1,17 @@
 # jarvis-claw 스케줄 설정
 # ⚠️ 요일 숫자는 APScheduler(Python) 기준: 0=월, 6=일
 #    UNIX cron(0=일)과 다르므로 이름 사용 권장 (mon-fri, sat, sun 등)
-- name: blocker-check
-  title: 이슈 현황 + 블로커 알림
-  cron: 10 7 * * *
-  enabled: false
-  prompt: |-
-    .taicki/project/state.yml을 읽고 이슈 전체 현황을 보고하세요.
+- name: operator
+  title: 컴피 자율 운영 에이전트
+  cron: "0 5 * * *"
+  enabled: true
+  prompt_file: .taicki/project/operator/operator-prompt.md
 
-    blocked 항목이 0개면 "블로킹 이슈 없음"으로 답변하세요.
-
-    blocked 항목이 1개 이상이면 아래 형식으로 답변하세요:
-
-    Open N개:
-    • #번호 제목 — 우선순위
-
-    🚧 Blocked N개 (사용자 조치 필요):
-    • #번호 제목 — blocked_reason에서 티제이님이 취해야 할 구체적 행동을 추출
-
-    ## 요약
-    - 🚧 티제이님: #{번호} {제목} — {구체적 행동} (blocked 0이면 이 줄 생략)
-    - 오픈 {N}개 / 블로킹 {M}개
+- name: issue-manager
+  title: 컴피 이슈 관리 에이전트
+  cron: 20 7 * * *
+  enabled: true
+  prompt_file: .taicki/project/operator/issue-manager-prompt.md
 
 - name: issue-solver
   title: 이슈 해결 에이전트 (14:30)
