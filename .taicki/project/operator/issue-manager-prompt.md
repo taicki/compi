@@ -50,6 +50,17 @@ for f in /Users/taekjookim/w/code/personal/compi/.taicki/project/issues/*.yml; d
 done
 ```
 
+**장기 방치 이슈가 3개 이상이고 기존 점검 이슈가 없는 경우**: issue-tracker 스킬로 이슈 생성.
+- title: "장기 방치 이슈 점검 ({N}개, {YYYY-MM})"
+- type: maintenance, priority: low
+
+
+## 이슈 생성이 필요한 경우
+
+새 이슈를 만들어야 할 때 (반복 블로커, 대규모 리팩토링 필요 등)는
+직접 YAML을 작성하지 않고 **issue-tracker 스킬을 사용**하라.
+이슈 번호(_seq), state.yml 업데이트, YAML 형식 관리를 스킬이 담당한다.
+
 ## 5단계: 요약 보고
 
 ```
