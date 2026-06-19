@@ -1,6 +1,7 @@
 id: "0004"
 title: "과목별 필러 페이지 + 학년별 필터 페이지 생성 — Pillar-Cluster 구조"
-status: open
+status: closed
+closed_date: "2026-06-20"
 priority: medium
 labels: [seo, feature]
 created_at: "2026-06-18"

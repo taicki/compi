@@ -4,6 +4,11 @@ closed:
     priority: high
     labels: [seo, feature]
     closed_date: "2026-06-19"
+  - id: "0004"
+    title: "과목별 필러 페이지 + 학년별 필터 페이지 생성 — Pillar-Cluster 구조"
+    priority: medium
+    labels: [seo, feature]
+    closed_date: "2026-06-20"
 
 open:
   - id: "0002"
@@ -14,10 +19,6 @@ open:
     title: "GA4 + Google Search Console 설치 — 측정 도구 구축"
     priority: high
     labels: [analytics, seo]
-  - id: "0004"
-    title: "과목별 필러 페이지 + 학년별 필터 페이지 생성 — Pillar-Cluster 구조"
-    priority: medium
-    labels: [seo, feature]
   - id: "0005"
     title: "draft 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
     priority: medium
