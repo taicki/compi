@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { SITE_NAME } from "../../config.ts";
-import { subjectColors, levelLabels, getDday, todayStr } from "../../utils/contest.ts";
+import { subjectColors, levelLabels, getDday, todayStr, subjectSlugMap } from "../../utils/contest.ts";
 import "../../styles/global.css";
 
 export async function getStaticPaths() {
@@ -64,6 +64,12 @@ const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험�
       <nav class="text-xs text-gray-400 mb-4">
         <a href="/" class="hover:text-indigo-500">홈</a>
         <span class="mx-1">›</span>
+        {subjectSlugMap[d.subject] ? (
+          <a href={`/subjects/${subjectSlugMap[d.subject]}/`} class="hover:text-indigo-500">{d.subject} 경시대회</a>
+        ) : (
+          <span>{d.subject} 경시대회</span>
+        )}
+        <span class="mx-1">›</span>
         <span class="text-gray-600">{d.name}</span>
       </nav>
 
@@ -83,9 +89,18 @@ const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험�
 
         <!-- 태그 -->
         <div class="flex items-center gap-2 flex-wrap mb-4">
-          <span class={`text-xs px-2.5 py-1 rounded-full font-medium ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}>
-            {d.subject}
-          </span>
+          {subjectSlugMap[d.subject] ? (
+            <a
+              href={`/subjects/${subjectSlugMap[d.subject]}/`}
+              class={`text-xs px-2.5 py-1 rounded-full font-medium hover:opacity-80 transition-opacity ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}
+            >
+              {d.subject}
+            </a>
+          ) : (
+            <span class={`text-xs px-2.5 py-1 rounded-full font-medium ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}>
+              {d.subject}
+            </span>
+          )}
           <span class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
             {levelLabels[d.level]}
           </span>

@@ -1,4 +1,4 @@
-// 경시대회 공통 유틸리티 — index.astro / [id].astro 공유
+// 경시대회 공통 유틸리티 — index.astro / [id].astro / [subject].astro 공유
 
 export const subjectColors: Record<string, string> = {
   수학: "bg-blue-100 text-blue-800",
@@ -26,6 +26,22 @@ export const TODAY = (() => {
 export const todayStr: string = TODAY.toISOString().split("T")[0];
 
 /**
+ * 과목명(한글) → URL 슬러그 매핑.
+ * 페이지가 실제 존재하는 과목만 포함 — 여기에 없는 과목은 /subjects/ 링크를 생성하지 않는다.
+ */
+export const subjectSlugMap: Record<string, string> = {
+  수학: "math",
+  과학: "science",
+  영어: "english",
+  코딩: "coding",
+};
+
+/** 슬러그 → 과목명(한글) 역방향 맵 — subjectSlugMap에서 파생 (중복 선언 금지) */
+export const slugToSubject: Record<string, string> = Object.fromEntries(
+  Object.entries(subjectSlugMap).map(([ko, slug]) => [slug, ko]),
+);
+
+/**
  * dateStr 로부터 D-day 문자열을 반환한다.
  * falsy 값이 들어오면 빈 문자열을 반환한다.
  */
@@ -37,4 +53,18 @@ export function getDday(dateStr: string | null | undefined): string {
   if (diff === 0) return "D-Day";
   if (diff > 0) return `D-${diff}`;
   return `D+${Math.abs(diff)}`;
+}
+
+/**
+ * 일정 배열에서 오늘 이후 가장 가까운 시험 일정을 반환한다.
+ * 없으면 null.
+ */
+export function getNextExam<T extends { exam_date?: string | null }>(
+  schedule: T[],
+): T | null {
+  return (
+    schedule
+      .filter((s) => s.exam_date && s.exam_date >= todayStr)
+      .sort((a, b) => (a.exam_date! > b.exam_date! ? 1 : -1))[0] ?? null
+  );
 }

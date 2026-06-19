@@ -1,0 +1,191 @@
+---
+import { getCollection } from "astro:content";
+import { SITE_NAME } from "../../config.ts";
+import { subjectColors, levelLabels, getDday, todayStr, slugToSubject, subjectSlugMap, getNextExam } from "../../utils/contest.ts";
+import "../../styles/global.css";
+
+/** 슬러그별 메타데이터 — 표시명·설명을 한곳에서 관리 */
+const SUBJECT_CONFIG: Record<string, { h1: string; description: string }> = {
+  math: {
+    h1: "수학 경시대회",
+    description: "초등·중등·고등 학생을 위한 수학 경시대회 일정을 한자리에 모았습니다. HME 해법수학, KMC 한국수학경시대회, KMO 한국수학올림피아드, 수학캥거루 등 전국 수학 경시대회의 접수 기간·시험일·응시료를 비교하고 원하는 대회를 바로 찾아보세요.",
+  },
+  science: {
+    h1: "과학 경시대회·올림피아드",
+    description: "초등·중등·고등 학생을 위한 과학 경시대회 및 올림피아드 일정을 한자리에 모았습니다. 한국중학교과학올림피아드(KJSO), 한국물리올림피아드, 한국화학·수학·컴퓨터과학 올림피아드까지 전국 과학 경시대회 정보를 한눈에 확인하세요.",
+  },
+  english: {
+    h1: "영어 경시대회",
+    description: "초등·중등 학생을 위한 영어 경시대회 일정을 한자리에 모았습니다. 한국어문회 영어경시, MBC영어경시대회 등 전국 영어 경시대회의 접수 기간과 시험일을 한눈에 확인하세요.",
+  },
+  coding: {
+    h1: "코딩·정보올림피아드",
+    description: "초등·중등·고등 학생을 위한 코딩·정보 경시대회 일정을 한자리에 모았습니다. 한국정보올림피아드(KOI), 코드페어, 전국학생코딩경시대회 등 전국 코딩·정보 경시대회의 접수 기간과 시험일을 한눈에 확인하세요.",
+  },
+};
+
+export async function getStaticPaths() {
+  return Object.values(subjectSlugMap).map((subject) => ({ params: { subject } }));
+}
+
+const { subject } = Astro.params;
+const subjectKo = slugToSubject[subject];
+
+const allContests = await getCollection("contests");
+const contests = allContests
+  .filter((c) => c.data.subject === subjectKo)
+  .sort((a, b) => {
+    const an = getNextExam(a.data.schedule);
+    const bn = getNextExam(b.data.schedule);
+    if (!an && !bn) return 0;
+    if (!an) return 1;
+    if (!bn) return -1;
+    return an.exam_date! > bn.exam_date! ? 1 : -1;
+  });
+
+const { h1, description } = SUBJECT_CONFIG[subject];
+const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <span class="text-xl font-bold text-indigo-600">{SITE_NAME}</span>
+          <span class="text-sm text-gray-400 hidden sm:block">초중등 경시대회 일정</span>
+        </a>
+        <a href="/" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+          ← 전체 목록
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+
+      <!-- 브레드크럼 -->
+      <nav class="text-xs text-gray-400 mb-4">
+        <a href="/" class="hover:text-indigo-500">홈</a>
+        <span class="mx-1">›</span>
+        <span class="text-gray-600">{h1}</span>
+      </nav>
+
+      <!-- 페이지 헤더 -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900 mb-2">
+          <span class={`inline-block text-sm px-2.5 py-0.5 rounded-full font-medium mr-2 align-middle ${subjectColors[subjectKo] ?? "bg-gray-100 text-gray-700"}`}>
+            {subjectKo}
+          </span>
+          {h1} 2026
+        </h1>
+        <p class="text-sm text-gray-600 leading-relaxed">{description}</p>
+      </div>
+
+      <!-- 과목별 탭 네비게이션 -->
+      <div class="flex gap-2 flex-wrap mb-6">
+        {Object.entries(slugToSubject).map(([slug, ko]) => (
+          <a
+            href={`/subjects/${slug}/`}
+            class={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
+              slug === subject
+                ? (subjectColors[ko] ?? "bg-gray-200 text-gray-700") + " ring-2 ring-offset-1 ring-current"
+                : "bg-white border border-gray-200 text-gray-600 hover:border-indigo-300 hover:text-indigo-600"
+            }`}
+          >
+            {ko} 경시대회
+          </a>
+        ))}
+      </div>
+
+      <!-- 대회 수 요약 -->
+      <p class="text-xs text-gray-400 mb-4">{contests.length}개 대회</p>
+
+      <!-- 대회 카드 목록 -->
+      <div class="grid gap-4">
+        {contests.map((contest) => {
+          const d = contest.data;
+          const nextExam = getNextExam(d.schedule);
+          const dday = getDday(nextExam?.exam_date);
+          return (
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 flex-wrap mb-1">
+                    <h2 class="text-base font-bold text-gray-900">
+                      <a href={`/contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
+                    </h2>
+                    <span class="text-xs text-gray-500">{levelLabels[d.level]}</span>
+                    {d.data_status === "draft" && (
+                      <span class="text-xs px-1.5 py-0.5 rounded-full bg-yellow-100 text-yellow-700">⚠ 확인 중</span>
+                    )}
+                  </div>
+                  <p class="text-sm text-gray-500 mb-2">
+                    {d.organizer} · 대상: {d.target.join("·")} · {d.frequency}
+                  </p>
+                  <p class="text-sm text-gray-600 mb-3">{d.summary}</p>
+                  {nextExam && (
+                    <div class="text-xs text-gray-500 bg-gray-50 rounded-lg p-3 grid grid-cols-2 gap-x-4 gap-y-1">
+                      <div class="font-medium text-gray-700 col-span-2">
+                        다음 일정: {nextExam.year}년 {nextExam.round ?? ""}
+                      </div>
+                      {nextExam.registration_end && (
+                        <div>📋 접수 마감: <span class="text-gray-800">{nextExam.registration_end}</span></div>
+                      )}
+                      {nextExam.exam_date && (
+                        <div>📝 시험일: <span class="text-gray-800 font-medium">{nextExam.exam_date}</span></div>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <div class="flex flex-col items-end gap-2 shrink-0">
+                  {dday && (
+                    <span class={`text-sm font-bold px-3 py-1 rounded-full ${dday === "D-Day" ? "bg-red-100 text-red-600" : dday.startsWith("D-") ? "bg-indigo-100 text-indigo-700" : "bg-gray-100 text-gray-500"}`}>
+                      시험 {dday}
+                    </span>
+                  )}
+                  {d.fee !== null ? (
+                    <span class="text-xs text-gray-500">{d.fee.toLocaleString()}원</span>
+                  ) : (
+                    <span class="text-xs text-green-600 font-medium">무료</span>
+                  )}
+                  <a
+                    href={`/contests/${d.id}/`}
+                    class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
+                  >
+                    상세 보기 →
+                  </a>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <!-- 전체 보기 링크 -->
+      <div class="mt-8 text-center">
+        <a href="/" class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">
+          ← 전체 경시대회 보기
+        </a>
+      </div>
+    </main>
+
+    <footer class="text-center text-xs text-gray-400 py-8 mt-4">
+      © 2026 {SITE_NAME} · 데이터 오류 제보 환영
+    </footer>
+  </body>
+</html>
