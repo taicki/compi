@@ -1,19 +1,10 @@
 ---
 import { getCollection } from "astro:content";
 import { SITE_NAME, SITE_TAGLINE } from "../config.ts";
+import { subjectColors, levelLabels, getDday, TODAY, todayStr } from "../utils/contest.ts";
 import "../styles/global.css";
 
 const contests = await getCollection("contests");
-
-const subjectColors: Record<string, string> = {
-  수학: "bg-blue-100 text-blue-800",
-  과학: "bg-green-100 text-green-800",
-  영어: "bg-yellow-100 text-yellow-800",
-  코딩: "bg-purple-100 text-purple-800",
-  국어: "bg-red-100 text-red-800",
-  역사: "bg-orange-100 text-orange-800",
-  종합: "bg-gray-100 text-gray-800",
-};
 
 const subjectDot: Record<string, string> = {
   수학: "bg-blue-400",
@@ -24,26 +15,6 @@ const subjectDot: Record<string, string> = {
   역사: "bg-orange-400",
   종합: "bg-gray-400",
 };
-
-const levelLabels: Record<string, string> = {
-  입문: "🌱 입문",
-  중급: "⭐ 중급",
-  심화: "🔥 심화",
-};
-
-const TODAY = new Date();
-TODAY.setHours(0, 0, 0, 0);
-const todayStr = TODAY.toISOString().split("T")[0];
-
-function getDday(dateStr: string | null): string {
-  if (!dateStr) return "";
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = new Date(dateStr);
-  const diff = Math.ceil((target.getTime() - today.getTime()) / 86400000);
-  if (diff === 0) return "D-Day";
-  if (diff > 0) return `D-${diff}`;
-  return `D+${Math.abs(diff)}`;
-}
 
 function getNextExam(schedule: typeof contests[0]["data"]["schedule"]) {
   const upcoming = schedule
@@ -133,7 +104,7 @@ type GanttRow = {
   exams: Array<{ pos: number; label: string }>;
 };
 
-const ganttRows: GanttRow[] = contests
+const ganttRows: GanttRow[] = [...contests]
   .sort((a, b) => a.data.subject.localeCompare(b.data.subject, "ko"))
   .map((c) => {
     const bars: GanttRow["bars"] = [];
@@ -360,7 +331,7 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
       <section id="contests">
         <h2 class="text-base font-semibold text-gray-700 mb-3">📋 전체 경시대회</h2>
         <div class="grid gap-4">
-          {contests
+          {[...contests]
             .sort((a, b) => {
               const an = getNextExam(a.data.schedule);
               const bn = getNextExam(b.data.schedule);
@@ -378,7 +349,9 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
                   <div class="flex items-start justify-between gap-4">
                     <div class="flex-1 min-w-0">
                       <div class="flex items-center gap-2 flex-wrap mb-1">
-                        <h3 class="text-base font-bold text-gray-900">{d.name}</h3>
+                        <h3 class="text-base font-bold text-gray-900">
+                          <a href={`/contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
+                        </h3>
                         <span class={`text-xs px-2 py-0.5 rounded-full font-medium ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}>
                           {d.subject}
                         </span>
@@ -420,12 +393,18 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
                         <span class="text-xs text-green-600 font-medium">무료</span>
                       )}
                       <a
+                        href={`/contests/${d.id}/`}
+                        class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
+                      >
+                        상세 보기 →
+                      </a>
+                      <a
                         href={d.official_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
+                        class="text-xs border border-gray-200 text-gray-600 px-3 py-1.5 rounded-lg hover:border-indigo-300 hover:text-indigo-600 transition-colors"
                       >
-                        공식 사이트 →
+                        공식 사이트
                       </a>
                     </div>
                   </div>

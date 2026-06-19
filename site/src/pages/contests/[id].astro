@@ -1,0 +1,240 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import { SITE_NAME } from "../../config.ts";
+import { subjectColors, levelLabels, getDday, todayStr } from "../../utils/contest.ts";
+import "../../styles/global.css";
+
+export async function getStaticPaths() {
+  const contests = await getCollection("contests");
+  return contests.map((contest) => ({
+    params: { id: contest.data.id },
+    props: { contest },
+  }));
+}
+
+type Props = { contest: CollectionEntry<"contests"> };
+const { contest } = Astro.props;
+const d = contest.data;
+
+const targetLabel = d.target.join(" · ");
+
+const upcomingExams = d.schedule
+  .filter((s) => s.exam_date && s.exam_date >= todayStr)
+  .sort((a, b) => (a.exam_date! > b.exam_date! ? 1 : -1));
+const nextExam = upcomingExams[0] ?? null;
+const dday = getDday(nextExam?.exam_date);
+
+const pageTitle = `${d.name} 2026 일정·접수 | ${SITE_NAME}`;
+const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험일, 응시료, 대상 학년 등 핵심 정보를 한눈에 확인하세요. ${d.summary}`;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <!-- Open Graph -->
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+          <span class="text-xl font-bold text-indigo-600">{SITE_NAME}</span>
+          <span class="text-sm text-gray-400 hidden sm:block">초중등 경시대회 일정</span>
+        </a>
+        <a href="/" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+          ← 전체 목록
+        </a>
+      </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+
+      <!-- 브레드크럼 -->
+      <nav class="text-xs text-gray-400 mb-4">
+        <a href="/" class="hover:text-indigo-500">홈</a>
+        <span class="mx-1">›</span>
+        <span class="text-gray-600">{d.name}</span>
+      </nav>
+
+      <!-- 대회 헤더 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <div class="flex items-start justify-between gap-4 mb-3">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900 mb-1">{d.name}</h1>
+            {d.name_en && <p class="text-sm text-gray-400">{d.name_en}</p>}
+          </div>
+          {dday && (
+            <span class={`shrink-0 text-sm font-bold px-4 py-2 rounded-full ${dday === "D-Day" ? "bg-red-100 text-red-600" : dday.startsWith("D-") ? "bg-indigo-100 text-indigo-700" : "bg-gray-100 text-gray-500"}`}>
+              시험 {dday}
+            </span>
+          )}
+        </div>
+
+        <!-- 태그 -->
+        <div class="flex items-center gap-2 flex-wrap mb-4">
+          <span class={`text-xs px-2.5 py-1 rounded-full font-medium ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}>
+            {d.subject}
+          </span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
+            {levelLabels[d.level]}
+          </span>
+          <span class="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-gray-600">
+            {d.frequency}
+          </span>
+          {d.data_status === "draft" && (
+            <span class="text-xs px-2.5 py-1 rounded-full bg-yellow-100 text-yellow-700">
+              ⚠ 확인 중
+            </span>
+          )}
+        </div>
+
+        <!-- 기본 정보 -->
+        <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm mb-4">
+          <div>
+            <dt class="text-gray-400 text-xs mb-0.5">주관</dt>
+            <dd class="text-gray-800 font-medium">{d.organizer}</dd>
+          </div>
+          <div>
+            <dt class="text-gray-400 text-xs mb-0.5">대상</dt>
+            <dd class="text-gray-800 font-medium">{targetLabel}</dd>
+          </div>
+          <div>
+            <dt class="text-gray-400 text-xs mb-0.5">응시료</dt>
+            <dd class={`font-medium ${d.fee === null || d.fee === 0 ? "text-green-600" : "text-gray-800"}`}>
+              {d.fee === null ? "미정" : d.fee === 0 ? "무료" : `${d.fee.toLocaleString()}원`}
+            </dd>
+          </div>
+          <div>
+            <dt class="text-gray-400 text-xs mb-0.5">과목</dt>
+            <dd class="text-gray-800 font-medium">{d.subject}</dd>
+          </div>
+        </dl>
+
+        <!-- 요약 -->
+        <p class="text-gray-700 text-sm leading-relaxed mb-5">{d.summary}</p>
+
+        <!-- 공식 사이트 -->
+        <a
+          href={d.official_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 bg-indigo-600 text-white text-sm px-5 py-2.5 rounded-xl hover:bg-indigo-700 transition-colors font-medium"
+        >
+          공식 사이트 방문 →
+        </a>
+      </div>
+
+      <!-- 일정 상세 -->
+      <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+        <h2 class="text-base font-semibold text-gray-800 mb-4">📅 2026년 일정</h2>
+        <div class="space-y-4">
+          {d.schedule.map((s) => {
+            const examDday = getDday(s.exam_date);
+            const isUpcoming = s.exam_date ? s.exam_date >= todayStr : false;
+            const regEndDday = getDday(s.registration_end);
+            return (
+              <div class={`rounded-xl border p-4 ${isUpcoming ? "border-indigo-100 bg-indigo-50/30" : "border-gray-100 bg-gray-50"}`}>
+                <div class="font-semibold text-gray-700 text-sm mb-3">
+                  {s.year}년 {s.round ?? ""}
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                  {s.registration_start && (
+                    <div class="flex items-center gap-2">
+                      <span class="text-green-500 text-xs shrink-0">📋</span>
+                      <span class="text-gray-500 shrink-0">접수 시작</span>
+                      <span class="text-gray-800 font-medium">{s.registration_start}</span>
+                    </div>
+                  )}
+                  {s.registration_end && (
+                    <div class="flex items-center gap-2">
+                      <span class="text-red-400 text-xs shrink-0">📋</span>
+                      <span class="text-gray-500 shrink-0">접수 마감</span>
+                      <span class="text-gray-800 font-medium">{s.registration_end}</span>
+                      {regEndDday.startsWith("D-") && (
+                        <span class="text-xs text-red-500 font-bold">{regEndDday}</span>
+                      )}
+                    </div>
+                  )}
+                  {s.exam_date && (
+                    <div class="flex items-center gap-2">
+                      <span class="text-indigo-500 text-xs shrink-0">📝</span>
+                      <span class="text-gray-500 shrink-0">시험일</span>
+                      <span class="text-gray-800 font-medium">{s.exam_date}</span>
+                      {examDday && (
+                        <span class={`text-xs font-bold ${examDday === "D-Day" ? "text-red-500" : examDday.startsWith("D-") ? "text-indigo-600" : "text-gray-400"}`}>
+                          {examDday}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  {s.result_date && (
+                    <div class="flex items-center gap-2">
+                      <span class="text-yellow-500 text-xs shrink-0">🏆</span>
+                      <span class="text-gray-500 shrink-0">결과 발표</span>
+                      <span class="text-gray-800 font-medium">{s.result_date}</span>
+                    </div>
+                  )}
+                  {!s.registration_start && !s.registration_end && !s.exam_date && !s.result_date && (
+                    <p class="text-gray-400 text-xs col-span-2">일정 미정 — 공식 사이트에서 확인하세요.</p>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <!-- 이 대회를 추천하는 이유 -->
+      {d.pros.length > 0 && (
+        <section class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+          <h2 class="text-base font-semibold text-gray-800 mb-3">✅ 이 대회를 선택하는 이유</h2>
+          <ul class="space-y-2">
+            {d.pros.map((pro) => (
+              <li class="flex items-start gap-2 text-sm text-gray-700">
+                <span class="text-indigo-400 shrink-0 mt-0.5">•</span>
+                <span>{pro}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <!-- 안내 문구 -->
+      {d.data_status === "draft" && (
+        <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6 text-sm text-yellow-800">
+          <strong>⚠ 데이터 확인 중</strong>: 이 대회의 일정은 공식 사이트에서 최종 확인 중입니다. 접수 전 반드시 <a href={d.official_url} target="_blank" rel="noopener noreferrer" class="underline font-medium">공식 사이트</a>에서 확인하세요.
+        </div>
+      )}
+
+      <!-- 하단 CTA -->
+      <div class="flex items-center justify-between">
+        <a href="/" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+          ← 전체 경시대회 보기
+        </a>
+        <a
+          href={d.official_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
+        >
+          공식 사이트 →
+        </a>
+      </div>
+    </main>
+
+    <footer class="text-center text-xs text-gray-400 py-8 mt-4">
+      © 2026 {SITE_NAME} · 데이터 오류 제보 환영
+    </footer>
+  </body>
+</html>
