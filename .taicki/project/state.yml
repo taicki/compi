@@ -1,8 +1,11 @@
-open:
+closed:
   - id: "0001"
     title: "경시대회별 개별 상세 페이지 생성 — 롱테일 SEO 진입점 확보"
     priority: high
     labels: [seo, feature]
+    closed_date: "2026-06-19"
+
+open:
   - id: "0002"
     title: "taicki.dev/compi/ 서브패스 배포 — 도메인 확정 전 임시 런칭"
     priority: high

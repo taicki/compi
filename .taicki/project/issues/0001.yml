@@ -1,6 +1,7 @@
 id: "0001"
 title: "경시대회별 개별 상세 페이지 생성 — 롱테일 SEO 진입점 확보"
-status: open
+status: closed
+closed_date: "2026-06-19"
 priority: high
 labels: [seo, feature]
 created_at: "2026-06-18"
