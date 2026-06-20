@@ -3,7 +3,7 @@
 #    UNIX cron(0=일)과 다르므로 이름 사용 권장 (mon-fri, sat, sun 등)
 - name: operator
   title: 컴피 자율 운영 에이전트
-  cron: "0 5 * * *"
+  cron: 13 5 * * *
   enabled: true
   prompt_file: .taicki/project/operator/operator-prompt.md
 
