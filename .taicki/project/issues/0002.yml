@@ -1,6 +1,6 @@
 id: "0002"
 title: "taicki.dev/compi/ 서브패스 배포 — 도메인 확정 전 임시 런칭"
-status: open
+status: in_progress
 priority: high
 labels: [infra, deploy]
 created_at: "2026-06-18"
