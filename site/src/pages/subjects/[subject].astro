@@ -45,14 +45,15 @@ const contests = allContests
 
 const { h1, description } = SUBJECT_CONFIG[subject];
 const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
+const BASE = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
+    <link rel="icon" href={`${BASE}favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
@@ -66,11 +67,11 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
       <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <a href={BASE} class="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <span class="text-xl font-bold text-indigo-600">{SITE_NAME}</span>
           <span class="text-sm text-gray-400 hidden sm:block">초중등 경시대회 일정</span>
         </a>
-        <a href="/" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+        <a href={BASE} class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
           ← 전체 목록
         </a>
       </div>
@@ -80,7 +81,7 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
 
       <!-- 브레드크럼 -->
       <nav class="text-xs text-gray-400 mb-4">
-        <a href="/" class="hover:text-indigo-500">홈</a>
+        <a href={BASE} class="hover:text-indigo-500">홈</a>
         <span class="mx-1">›</span>
         <span class="text-gray-600">{h1}</span>
       </nav>
@@ -100,7 +101,7 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
       <div class="flex gap-2 flex-wrap mb-6">
         {Object.entries(slugToSubject).map(([slug, ko]) => (
           <a
-            href={`/subjects/${slug}/`}
+            href={`${BASE}subjects/${slug}/`}
             class={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors ${
               slug === subject
                 ? (subjectColors[ko] ?? "bg-gray-200 text-gray-700") + " ring-2 ring-offset-1 ring-current"
@@ -127,7 +128,7 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
                 <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-2 flex-wrap mb-1">
                     <h2 class="text-base font-bold text-gray-900">
-                      <a href={`/contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
+                      <a href={`${BASE}contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
                     </h2>
                     <span class="text-xs text-gray-500">{levelLabels[d.level]}</span>
                     {d.data_status === "unconfirmed" && (
@@ -164,7 +165,7 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
                     <span class="text-xs text-green-600 font-medium">무료</span>
                   )}
                   <a
-                    href={`/contests/${d.id}/`}
+                    href={`${BASE}contests/${d.id}/`}
                     class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
                   >
                     상세 보기 →
@@ -178,7 +179,7 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
 
       <!-- 전체 보기 링크 -->
       <div class="mt-8 text-center">
-        <a href="/" class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">
+        <a href={BASE} class="text-sm text-indigo-600 hover:text-indigo-800 transition-colors">
           ← 전체 경시대회 보기
         </a>
       </div>

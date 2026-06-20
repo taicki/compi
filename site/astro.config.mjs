@@ -6,6 +6,7 @@ import { SITE_URL } from './src/config.ts';
 
 export default defineConfig({
   site: SITE_URL,
+  base: '/compi',
   trailingSlash: 'always',
   integrations: [sitemap()],
   vite: {

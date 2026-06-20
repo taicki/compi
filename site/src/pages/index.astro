@@ -5,6 +5,7 @@ import { subjectColors, levelLabels, getDday, TODAY, todayStr, subjectSlugMap, g
 import "../styles/global.css";
 
 const contests = await getCollection("contests");
+const BASE = import.meta.env.BASE_URL;
 
 const subjectDot: Record<string, string> = {
   수학: "bg-blue-400",
@@ -130,8 +131,8 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
+    <link rel="icon" href={`${BASE}favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{SITE_NAME} — {SITE_TAGLINE}</title>
@@ -343,11 +344,11 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
                     <div class="flex-1 min-w-0">
                       <div class="flex items-center gap-2 flex-wrap mb-1">
                         <h3 class="text-base font-bold text-gray-900">
-                          <a href={`/contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
+                          <a href={`${BASE}contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
                         </h3>
                         {subjectSlugMap[d.subject] ? (
                           <a
-                            href={`/subjects/${subjectSlugMap[d.subject]}/`}
+                            href={`${BASE}subjects/${subjectSlugMap[d.subject]}/`}
                             class={`text-xs px-2 py-0.5 rounded-full font-medium hover:opacity-80 transition-opacity ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}
                           >
                             {d.subject}
@@ -395,7 +396,7 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
                         <span class="text-xs text-green-600 font-medium">무료</span>
                       )}
                       <a
-                        href={`/contests/${d.id}/`}
+                        href={`${BASE}contests/${d.id}/`}
                         class="text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg hover:bg-indigo-700 transition-colors mt-auto"
                       >
                         상세 보기 →

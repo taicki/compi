@@ -26,14 +26,15 @@ const dday = getDday(nextExam?.exam_date);
 
 const pageTitle = `${d.name} 2026 일정·접수 | ${SITE_NAME}`;
 const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험일, 응시료, 대상 학년 등 핵심 정보를 한눈에 확인하세요. ${d.summary}`;
+const BASE = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
+    <link rel="icon" href={`${BASE}favicon.ico`} />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
@@ -48,11 +49,11 @@ const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험�
     <!-- Header -->
     <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
       <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <a href={BASE} class="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <span class="text-xl font-bold text-indigo-600">{SITE_NAME}</span>
           <span class="text-sm text-gray-400 hidden sm:block">초중등 경시대회 일정</span>
         </a>
-        <a href="/" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+        <a href={BASE} class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
           ← 전체 목록
         </a>
       </div>
@@ -62,10 +63,10 @@ const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험�
 
       <!-- 브레드크럼 -->
       <nav class="text-xs text-gray-400 mb-4">
-        <a href="/" class="hover:text-indigo-500">홈</a>
+        <a href={BASE} class="hover:text-indigo-500">홈</a>
         <span class="mx-1">›</span>
         {subjectSlugMap[d.subject] ? (
-          <a href={`/subjects/${subjectSlugMap[d.subject]}/`} class="hover:text-indigo-500">{d.subject} 경시대회</a>
+          <a href={`${BASE}subjects/${subjectSlugMap[d.subject]}/`} class="hover:text-indigo-500">{d.subject} 경시대회</a>
         ) : (
           <span>{d.subject} 경시대회</span>
         )}
@@ -91,7 +92,7 @@ const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험�
         <div class="flex items-center gap-2 flex-wrap mb-4">
           {subjectSlugMap[d.subject] ? (
             <a
-              href={`/subjects/${subjectSlugMap[d.subject]}/`}
+              href={`${BASE}subjects/${subjectSlugMap[d.subject]}/`}
               class={`text-xs px-2.5 py-1 rounded-full font-medium hover:opacity-80 transition-opacity ${subjectColors[d.subject] ?? "bg-gray-100 text-gray-700"}`}
             >
               {d.subject}
@@ -234,7 +235,7 @@ const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험�
 
       <!-- 하단 CTA -->
       <div class="flex items-center justify-between">
-        <a href="/" class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
+        <a href={BASE} class="text-sm text-gray-500 hover:text-indigo-600 transition-colors">
           ← 전체 경시대회 보기
         </a>
         <a
