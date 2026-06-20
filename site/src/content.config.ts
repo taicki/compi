@@ -26,7 +26,7 @@ const contests = defineCollection({
     official_url: z.string().url(),
     summary: z.string(),
     pros: z.array(z.string()),
-    data_status: z.enum(["draft", "verified"]),
+    data_status: z.enum(["unconfirmed", "confirmed"]),
   }),
 });
 

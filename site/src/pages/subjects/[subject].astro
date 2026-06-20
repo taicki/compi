@@ -130,8 +130,8 @@ const pageTitle = `${h1} 2026 일정 모음 — 초중등 | ${SITE_NAME}`;
                       <a href={`/contests/${d.id}/`} class="hover:text-indigo-600 transition-colors">{d.name}</a>
                     </h2>
                     <span class="text-xs text-gray-500">{levelLabels[d.level]}</span>
-                    {d.data_status === "draft" && (
-                      <span class="text-xs px-1.5 py-0.5 rounded-full bg-yellow-100 text-yellow-700">⚠ 확인 중</span>
+                    {d.data_status === "unconfirmed" && (
+                      <span class="text-xs px-1.5 py-0.5 rounded-full bg-yellow-100 text-yellow-700">⚠ 일정 미확인</span>
                     )}
                   </div>
                   <p class="text-sm text-gray-500 mb-2">
