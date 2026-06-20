@@ -11,10 +11,7 @@
 
 ```bash
 cd /Users/taekjookim/w/code/personal/compi
-cat .taicki/project/state.yml 2>/dev/null || echo "(state.yml 없음)"
-OPEN=$(find .taicki/project/issues -name "*.yml" 2>/dev/null | xargs grep -l "status: open" 2>/dev/null | wc -l | tr -d ' ')
-BLOCKED=$(find .taicki/project/issues -name "*.yml" 2>/dev/null | xargs grep -l "status: blocked" 2>/dev/null | wc -l | tr -d ' ')
-echo "Open: $OPEN  Blocked: $BLOCKED"
+~/.claude/skills/issue-tracker/scripts/issue_tracker.py list
 git log --oneline -3
 ```
 

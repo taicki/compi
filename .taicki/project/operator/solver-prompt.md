@@ -35,7 +35,7 @@
 cd /Users/taekjookim/w/code/personal/compi
 
 # 이슈 목록
-cat .taicki/project/state.yml
+~/.claude/skills/issue-tracker/scripts/issue_tracker.py list
 
 # 최근 해결 이력 (중복 방지)
 CURR_MONTH=$(date +%Y-%m)
@@ -83,7 +83,12 @@ ICE = Impact × Confidence × Ease (최대 27점). 동점이면 Ease 높은 쪽 
 
 ## 2단계: 구현
 
-1. `project/issues/NNNN.yml` 읽기
+이슈 착수 전 상태 변경:
+```bash
+~/.claude/skills/issue-tracker/scripts/issue_tracker.py set-status N in_progress
+```
+
+1. `.taicki/project/issues/NNNN.yml` 읽기
 2. 구현 (코드 또는 데이터 변경)
 3. **빌드 검증**:
    ```bash
@@ -103,9 +108,10 @@ ICE = Impact × Confidence × Ease (최대 27점). 동점이면 Ease 높은 쪽 
 
 ## 3단계: 이슈 닫기
 
-1. `.taicki/project/issues/NNNN.yml` → `status: closed`, `closed_date: "YYYY-MM-DD"` 추가
-2. `.taicki/project/state.yml`에서 해당 이슈 status 업데이트
-3. `git add .taicki/project/ && git commit -m "chore: 이슈 #N closed"` + `git push`
+```bash
+~/.claude/skills/issue-tracker/scripts/issue_tracker.py close N
+git add .taicki/project/ && git commit -m "chore: 이슈 #N closed" && git push
+```
 
 ---
 
