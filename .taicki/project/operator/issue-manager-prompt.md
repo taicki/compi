@@ -9,9 +9,10 @@
 
 ## 1단계: 이슈 현황 파악
 
+`issue-tracker` 스킬로 이슈 현황을 파악한다.
+
 ```bash
 cd /Users/taekjookim/w/code/personal/compi
-~/.claude/skills/issue-tracker/scripts/issue_tracker.py list
 git log --oneline -3
 ```
 
