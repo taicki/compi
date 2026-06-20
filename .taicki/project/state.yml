@@ -20,7 +20,7 @@ open:
     priority: high
     labels: [analytics, seo]
   - id: "0005"
-    title: "draft 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
+    title: "unconfirmed 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
     priority: medium
     labels: [data, content]
   - id: "0006"
