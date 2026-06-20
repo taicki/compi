@@ -9,6 +9,11 @@ closed:
     priority: medium
     labels: [seo, feature]
     closed_date: "2026-06-20"
+  - id: "0005"
+    title: "unconfirmed 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
+    priority: medium
+    labels: [data, content]
+    closed_date: "2026-06-20"
 
 open:
   - id: "0002"
@@ -19,10 +24,6 @@ open:
     title: "GA4 + Google Search Console 설치 — 측정 도구 구축"
     priority: high
     labels: [analytics, seo]
-  - id: "0005"
-    title: "unconfirmed 상태 경시대회 데이터 공식 확인·완성 — 데이터 정확성 확보"
-    priority: medium
-    labels: [data, content]
   - id: "0006"
     title: "사이트 이름 + 브랜드 아이덴티티 확정 — 도메인 구입 전제"
     priority: high
