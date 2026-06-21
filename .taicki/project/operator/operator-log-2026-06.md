@@ -1,5 +1,14 @@
 # Operator Log — 2026-06
 
+## 2026-06-22 05:18 KST — 이슈 #0008: Schema.org Event JSON-LD 구조화 데이터 추가
+- **결과**: 성공
+- **변경 파일**:
+  - `site/src/pages/contests/[id].astro` (JSON-LD 생성 로직 + `<script type="application/ld+json">` 삽입)
+- **커밋**: 9db4aa1
+- **빌드**: 통과 ✓ (25페이지)
+- **소요**: 8분
+- **내용**: 시험일 있는 회차를 Schema.org Event 타입으로 마크업. fee=null 시 price 생략, 여러 회차는 @graph 배열로 직렬화.
+
 ## 2026-06-21 05:25 KST — 이슈 #0002: taicki.dev/compi/ 서브패스 배포 준비
 - **결과**: 부분 완료 (코드 준비 완료, rsync 배포 대기)
 - **변경 파일**:
