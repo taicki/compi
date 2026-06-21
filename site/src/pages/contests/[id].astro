@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
-import { SITE_NAME } from "../../config.ts";
-import { subjectColors, levelLabels, getDday, todayStr, subjectSlugMap } from "../../utils/contest.ts";
+import { SITE_NAME, SITE_URL } from "../../config.ts";
+import { subjectColors, levelLabels, getDday, todayStr, subjectSlugMap, getNextExam } from "../../utils/contest.ts";
 import "../../styles/global.css";
 
 export async function getStaticPaths() {
@@ -18,15 +18,49 @@ const d = contest.data;
 
 const targetLabel = d.target.join(" · ");
 
-const upcomingExams = d.schedule
-  .filter((s) => s.exam_date && s.exam_date >= todayStr)
-  .sort((a, b) => (a.exam_date! > b.exam_date! ? 1 : -1));
-const nextExam = upcomingExams[0] ?? null;
+const nextExam = getNextExam(d.schedule);
 const dday = getDday(nextExam?.exam_date);
 
 const pageTitle = `${d.name} 2026 일정·접수 | ${SITE_NAME}`;
 const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험일, 응시료, 대상 학년 등 핵심 정보를 한눈에 확인하세요. ${d.summary}`;
 const BASE = import.meta.env.BASE_URL;
+
+// Schema.org JSON-LD — 시험일이 있는 회차만 Event로 마크업
+const pageUrl = `${SITE_URL}${BASE}contests/${d.id}/`;
+const jsonLdEvents = d.schedule
+  .filter((s) => s.exam_date)
+  .map((s) => ({
+    "@type": "Event",
+    name: s.round ? `${d.name} ${s.year} ${s.round}` : `${d.name} ${s.year}`,
+    startDate: s.exam_date,
+    endDate: s.exam_date,
+    url: pageUrl,
+    description: d.summary,
+    organizer: {
+      "@type": "Organization",
+      name: d.organizer,
+      url: d.official_url,
+    },
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    offers: s.registration_start && s.registration_end
+      ? {
+          "@type": "Offer",
+          validFrom: s.registration_start,
+          validThrough: s.registration_end,
+          ...(d.fee != null ? { price: d.fee, priceCurrency: "KRW" } : {}),
+          availability: "https://schema.org/InStock",
+          url: d.official_url,
+        }
+      : undefined,
+  }));
+
+const jsonLd =
+  jsonLdEvents.length === 1
+    ? { "@context": "https://schema.org", ...jsonLdEvents[0] }
+    : jsonLdEvents.length > 1
+      ? { "@context": "https://schema.org", "@graph": jsonLdEvents }
+      : null;
 ---
 
 <!doctype html>
@@ -43,6 +77,10 @@ const BASE = import.meta.env.BASE_URL;
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:type" content="website" />
+    <!-- Schema.org JSON-LD -->
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
   </head>
   <body class="bg-gray-50 min-h-screen">
 
