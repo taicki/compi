@@ -1,0 +1,31 @@
+id: "0008"
+title: "Schema.org Event JSON-LD 구조화 데이터 추가 — 검색 리치 스니펫"
+status: open
+priority: high
+labels: [seo, feature]
+created_at: "2026-06-22"
+body: |
+  ## 현상
+  현재 상세 페이지에 Schema.org 구조화 데이터(JSON-LD)가 없다.
+  구글은 Event 타입 마크업을 인식하여 검색 결과에 날짜·장소 등을
+  리치 스니펫으로 표시할 수 있다.
+
+  ## 사용자 가치
+  - 학부모가 구글 검색 시 "HME 해법수학 2026" 검색 결과에
+    시험 날짜·주관이 바로 보임 → 클릭률(CTR) 향상
+  - 검색 인덱싱 신호 강화 → SEO 직접 효과
+
+  ## 해결 방향
+  1. contests/[id].astro <head> 안에 JSON-LD 스크립트 추가
+  2. Schema.org Event 타입으로 마크업:
+     - name: 대회명
+     - startDate: 시험일 (ISO 8601)
+     - organizer: 주관 기관
+     - url: 공식 사이트
+     - description: 요약
+  3. 일정이 여러 회차인 경우 모든 예정 회차를 배열로 포함
+
+  ## 완료 기준
+  - 상세 페이지 HTML 소스에 application/ld+json 스크립트 태그 존재
+  - Google Rich Results Test로 오류 없음 확인
+  - 빌드 통과
