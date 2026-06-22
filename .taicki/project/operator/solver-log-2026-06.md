@@ -1,3 +1,26 @@
+## 2026-06-22 14:37 KST — 이슈 #0009: OGP / Twitter Card 메타태그 전 페이지 통일
+- **결과**: 성공
+- **변경 파일**:
+  - `site/src/components/BaseHead.astro` (신규)
+  - `site/src/pages/index.astro` (BaseHead 적용, OGP 전체 추가)
+  - `site/src/pages/contests/[id].astro` (BaseHead 교체, og:url/image/twitter:* 보완)
+  - `site/src/pages/subjects/[subject].astro` (BaseHead 교체, 동일)
+  - `.taicki/project/issues/0009.yml` (신규 이슈 + closed)
+- **커밋**: f8dd9b9, 85201f8
+- **빌드**: 통과 ✓ (25 pages)
+- **사유**: 기존 open 이슈 전부 blocked/외부의존. 사이트에서 OGP 미구현 발견 → 신규 이슈 #0009 생성 후 처리
+
+## 2026-06-21 14:31 KST — 적합한 이슈 없음
+- **결과**: 적합한 이슈 없음
+- **변경 파일**: 해당없음
+- **커밋**: 해당없음
+- **빌드**: 해당없음
+- **사유**:
+  - #0003 (GA4+GSC): 외부 서비스 계정 설정 필요
+  - #0006 (브랜드 확정): 티제이님 결정 필요
+  - #0002 (배포): 코드 준비 완료, 배포는 티제이님 직접 실행
+  - #0007 (도메인): blocked
+
 ## 2026-06-20 14:41 KST — 이슈 #0005: data_status 스키마·UI 개선 — unconfirmed 상태 도입
 - **결과**: 성공
 - **변경 파일**:
