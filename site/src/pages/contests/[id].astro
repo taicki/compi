@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { SITE_NAME, SITE_URL } from "../../config.ts";
 import { subjectColors, levelLabels, getDday, todayStr, subjectSlugMap, getNextExam } from "../../utils/contest.ts";
+import BaseHead from "../../components/BaseHead.astro";
 import "../../styles/global.css";
 
 export async function getStaticPaths() {
@@ -66,17 +67,11 @@ const jsonLd =
 <!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
-    <link rel="icon" href={`${BASE}favicon.ico`} />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{pageTitle}</title>
-    <meta name="description" content={pageDescription} />
-    <!-- Open Graph -->
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={pageDescription} />
-    <meta property="og:type" content="website" />
+    <BaseHead
+      title={pageTitle}
+      description={pageDescription}
+      ogUrl={pageUrl}
+    />
     <!-- Schema.org JSON-LD -->
     {jsonLd && (
       <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
-import { SITE_NAME, SITE_TAGLINE } from "../config.ts";
+import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "../config.ts";
+import BaseHead from "../components/BaseHead.astro";
 import { subjectColors, levelLabels, getDday, TODAY, todayStr, subjectSlugMap, getNextExam } from "../utils/contest.ts";
 import "../styles/global.css";
 
@@ -130,13 +131,11 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
 <!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
-    <link rel="icon" href={`${BASE}favicon.ico`} />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{SITE_NAME} — {SITE_TAGLINE}</title>
-    <meta name="description" content="초등·중등·고등 경시대회 일정을 한눈에 확인하세요. 수학·과학·영어·코딩 경시대회 접수일·시험일·결과발표일 안내." />
+    <BaseHead
+      title={`${SITE_NAME} — ${SITE_TAGLINE}`}
+      description="초등·중등·고등 경시대회 일정을 한눈에 확인하세요. 수학·과학·영어·코딩 경시대회 접수일·시험일·결과발표일 안내."
+      ogUrl={`${SITE_URL}${BASE}`}
+    />
   </head>
   <body class="bg-gray-50 min-h-screen">
 

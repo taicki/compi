@@ -1,0 +1,47 @@
+---
+import { SITE_NAME, SITE_URL } from "../config.ts";
+
+interface Props {
+  title: string;
+  description: string;
+  ogType?: string;
+  ogUrl?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description,
+  ogType = "website",
+  ogUrl,
+  ogImage,
+} = Astro.props;
+
+const BASE = import.meta.env.BASE_URL;
+const defaultOgImage = `${SITE_URL}${BASE}og-default.png`;
+const resolvedOgImage = ogImage ?? defaultOgImage;
+const resolvedOgUrl = ogUrl ?? Astro.url.href;
+---
+
+<meta charset="utf-8" />
+<link rel="icon" type="image/svg+xml" href={`${BASE}favicon.svg`} />
+<link rel="icon" href={`${BASE}favicon.ico`} />
+<meta name="viewport" content="width=device-width" />
+<meta name="generator" content={Astro.generator} />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={resolvedOgUrl} />
+<!-- Open Graph -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={resolvedOgUrl} />
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:site_name" content={SITE_NAME} />
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedOgImage} />
