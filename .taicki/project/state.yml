@@ -1,4 +1,9 @@
 closed:
+  - id: "0010"
+    title: "학년별 필터 페이지 생성 — 초등·중등·고등 경시대회 SEO 진입점"
+    priority: high
+    labels: [seo, feature]
+    closed_date: "2026-06-26"
   - id: "0001"
     title: "경시대회별 개별 상세 페이지 생성 — 롱테일 SEO 진입점 확보"
     priority: high
@@ -21,10 +26,6 @@ closed:
     closed_date: "2026-06-22"
 
 open:
-  - id: "0010"
-    title: "학년별 필터 페이지 생성 — 초등·중등·고등 경시대회 SEO 진입점"
-    priority: high
-    labels: [seo, feature]
   - id: "0003"
     title: "GA4 + Google Search Console 설치 — 측정 도구 구축"
     priority: high

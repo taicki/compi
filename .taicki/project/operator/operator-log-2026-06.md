@@ -1,5 +1,18 @@
 # Operator Log — 2026-06
 
+## 2026-06-26 05:23 KST — 이슈 #0010: 학년별 필터 페이지 생성 — 초등·중등·고등 SEO 진입점
+- **결과**: 성공
+- **변경 파일**:
+  - `site/src/utils/contest.ts` (gradeSlugMap, slugToGrade 추가)
+  - `site/src/pages/grades/[grade].astro` (신규)
+  - `site/src/pages/index.astro` ("🔍 빠른 찾기" 섹션 추가)
+  - `site/src/pages/contests/[id].astro` (대상 학년 태그 → 학년 페이지 링크)
+- **커밋**: b0d2082
+- **빌드**: 통과 ✓ (25페이지 → 28페이지)
+- **소요**: 10분
+- **생성 페이지**: /grades/elementary/, /grades/middle/, /grades/high/
+- **내용**: target 배열 포함 여부로 필터. 인덱스에 과목·학년 통합 "빠른 찾기" 패널 추가. 대회 상세 페이지의 대상 학년 태그에 링크 연결.
+
 ## 2026-06-22 05:18 KST — 이슈 #0008: Schema.org Event JSON-LD 구조화 데이터 추가
 - **결과**: 성공
 - **변경 파일**:
