@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "../config.ts";
 import BaseHead from "../components/BaseHead.astro";
-import { subjectColors, levelLabels, getDday, TODAY, todayStr, subjectSlugMap, getNextExam } from "../utils/contest.ts";
+import { subjectColors, levelLabels, getDday, TODAY, todayStr, subjectSlugMap, gradeSlugMap, getNextExam } from "../utils/contest.ts";
 import "../styles/global.css";
 
 const contests = await getCollection("contests");
@@ -316,6 +316,41 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
                 {m}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- 빠른 찾기 — 과목별 · 학년별 -->
+      <section class="mb-8">
+        <h2 class="text-base font-semibold text-gray-700 mb-3">🔍 빠른 찾기</h2>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- 과목별 -->
+          <div>
+            <p class="text-xs font-medium text-gray-500 mb-2">과목별</p>
+            <div class="flex flex-wrap gap-2">
+              {Object.entries(subjectSlugMap).map(([ko, slug]) => (
+                <a
+                  href={`${BASE}subjects/${slug}/`}
+                  class={`text-xs px-3 py-1.5 rounded-full font-medium hover:opacity-90 transition-opacity ${subjectColors[ko] ?? "bg-gray-100 text-gray-700"}`}
+                >
+                  {ko} 경시대회
+                </a>
+              ))}
+            </div>
+          </div>
+          <!-- 학년별 -->
+          <div>
+            <p class="text-xs font-medium text-gray-500 mb-2">학년별</p>
+            <div class="flex flex-wrap gap-2">
+              {Object.entries(gradeSlugMap).map(([ko, slug]) => (
+                <a
+                  href={`${BASE}grades/${slug}/`}
+                  class="text-xs px-3 py-1.5 rounded-full font-medium bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition-colors"
+                >
+                  {ko} 경시대회
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -42,6 +42,21 @@ export const slugToSubject: Record<string, string> = Object.fromEntries(
 );
 
 /**
+ * 학년(한글) → URL 슬러그 매핑.
+ * 페이지가 실제 존재하는 학년만 포함.
+ */
+export const gradeSlugMap: Record<string, string> = {
+  초등: "elementary",
+  중등: "middle",
+  고등: "high",
+};
+
+/** 슬러그 → 학년(한글) 역방향 맵 */
+export const slugToGrade: Record<string, string> = Object.fromEntries(
+  Object.entries(gradeSlugMap).map(([ko, slug]) => [slug, ko]),
+);
+
+/**
  * dateStr 로부터 D-day 문자열을 반환한다.
  * falsy 값이 들어오면 빈 문자열을 반환한다.
  */

@@ -1,0 +1,23 @@
+id: "0010"
+title: "학년별 필터 페이지 생성 — 초등·중등·고등 경시대회 SEO 진입점"
+status: open
+priority: high
+labels: [seo, feature]
+created_at: "2026-06-26"
+body: |
+  ## 현상
+  data/contests/*.yml에 target 필드(초등·중등·고등)가 이미 있으나 학년별 필터 페이지가 없다.
+  '초등 수학경시대회 2026', '중학생 경시대회' 등 학부모 검색 쿼리에 대응하는 진입점이 없는 상태.
+
+  ## 해결 방향
+  1. site/src/pages/grades/[grade].astro 신규 생성 — subjects/[subject].astro 패턴 참조
+  2. 슬러그 매핑: elementary→초등, middle→중등, high→고등
+  3. utils/contest.ts에 gradeSlugMap, slugToGrade 추가
+  4. 인덱스 페이지에 학년 필터 링크 섹션 추가
+  5. 대회 상세 페이지([id].astro)에 학년 태그 링크 추가
+
+  ## 완료 기준
+  - /grades/elementary/, /grades/middle/, /grades/high/ 3개 페이지 빌드
+  - 각 페이지에 해당 학년 포함 경시대회만 표시 (target 배열에 포함 여부 기준)
+  - SEO 최적화 h1, description, OGP, JSON-LD 포함
+  - 인덱스·상세 페이지에서 학년 태그 클릭 시 해당 필터 페이지로 이동
