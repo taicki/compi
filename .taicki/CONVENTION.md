@@ -1,1 +1,1 @@
-/Users/taekjookim/w/code/personal/project-management/docs/agent-schedule-convention.md
+/Users/taekjookim/w/code/personal/jarvis-claw/docs/agent-schedule-convention.md

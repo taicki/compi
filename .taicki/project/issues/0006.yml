@@ -1,5 +1,6 @@
-id: "0006"
+id: 6
 title: "사이트 브랜드 이름 + 도메인 확정 — 독립 서비스 전제"
+created: "2026-06-01"
 status: open
 priority: high
 labels: [branding, setup]
