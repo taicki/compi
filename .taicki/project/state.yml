@@ -20,13 +20,6 @@ open:
     labels:
       - branding
       - setup
-  - id: 11
-    title: 홈 페이지 '지금 접수 중인 대회' 섹션 추가 — 즉각 액션 유도
-    status: in_progress
-    priority: high
-    labels:
-      - feature
-      - ux
 blocked:
   - id: 7
     title: 도메인 구입 + nginx 독립 서비스 전환 — taicki.dev 서브패스 탈출
