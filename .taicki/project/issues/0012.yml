@@ -1,6 +1,6 @@
 id: 12
 title: 대회 목록 즉시 필터링 — 과목·학년·텍스트 검색으로 찾기
-status: in_progress
+status: closed
 priority: medium
 created: '2026-06-27'
 definition_of_done: 홈 페이지 대회 목록에서 과목/학년 버튼 클릭 및 텍스트 입력 시 즉시 필터링이 동작하고, 빌드가 통과된 상태
@@ -30,3 +30,4 @@ body: |
   - 텍스트 입력 시 대회명 포함 대회만 실시간 표시
   - 빌드 통과 ✓
 updated: '2026-06-27'
+closed: '2026-06-27'
