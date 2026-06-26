@@ -1,3 +1,13 @@
+## 2026-06-26 14:35 KST — 이슈 #0011: 홈 페이지 '지금 확인하세요' 섹션 추가
+- **결과**: 성공
+- **변경 파일**:
+  - `site/src/pages/index.astro` (urgentContests 계산 로직 + 섹션 UI 추가)
+  - `.taicki/project/issues/0011.yml` (신규 이슈 + closed)
+  - `.taicki/project/issues/0001~0010.yml` (id 정수형 변환 + created 복구)
+- **커밋**: 46aae3f, b81cf92, cf20100
+- **빌드**: 통과 ✓ (28 pages)
+- **사유**: 기존 open 이슈 전부 외부의존/blocked. 홈 페이지에 접수 중 대회 표시 기능 없음 발견 → 신규 이슈 #0011 생성 후 처리
+
 ## 2026-06-22 14:37 KST — 이슈 #0009: OGP / Twitter Card 메타태그 전 페이지 통일
 - **결과**: 성공
 - **변경 파일**:
