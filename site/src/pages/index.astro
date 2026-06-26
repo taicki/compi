@@ -136,12 +136,6 @@ type UrgentContest = {
   daysLeft: number;
   isUrgent: boolean;
   badgeText: string;
-  cardBg: string;
-  badgeCls: string;
-  textCls: string;
-  subTextCls: string;
-  btnCls: string;
-  showDdaySub: boolean;
 };
 
 const urgentContests: UrgentContest[] = [];
@@ -167,12 +161,6 @@ for (const c of contests) {
         daysLeft,
         isUrgent,
         badgeText,
-        cardBg: isUrgent ? "bg-orange-50 border-orange-200" : "bg-green-50 border-green-200",
-        badgeCls: isUrgent ? "bg-orange-500 text-white" : "bg-green-500 text-white",
-        textCls: isUrgent ? "text-orange-900" : "text-green-900",
-        subTextCls: isUrgent ? "text-orange-700" : "text-green-700",
-        btnCls: isUrgent ? "bg-orange-500 text-white hover:bg-orange-600" : "bg-green-600 text-white hover:bg-green-700",
-        showDdaySub: !isUrgent && daysLeft <= 7,
       });
     }
   }
@@ -243,25 +231,25 @@ urgentContests.sort((a, b) => a.daysLeft - b.daysLeft);
           <h2 class="text-base font-semibold text-gray-700 mb-3">⚡ 지금 확인하세요</h2>
           <div class="grid gap-3">
             {urgentContests.map((u) => (
-              <div class={`rounded-xl border p-4 flex items-center justify-between gap-4 ${u.cardBg}`}>
+              <div class={`rounded-xl border p-4 flex items-center justify-between gap-4 ${u.isUrgent ? "bg-orange-50 border-orange-200" : "bg-green-50 border-green-200"}`}>
                 <div class="flex items-center gap-3 min-w-0">
-                  <span class={`shrink-0 text-xs font-bold px-2.5 py-1 rounded-full ${u.badgeCls}`}>
+                  <span class={`shrink-0 text-xs font-bold px-2.5 py-1 rounded-full ${u.isUrgent ? "bg-orange-500 text-white" : "bg-green-500 text-white"}`}>
                     {u.badgeText}
                   </span>
                   <div class="min-w-0">
-                    <a href={`${BASE}contests/${u.id}/`} class={`font-semibold text-sm hover:underline truncate block ${u.textCls}`}>
+                    <a href={`${BASE}contests/${u.id}/`} class={`font-semibold text-sm hover:underline truncate block ${u.isUrgent ? "text-orange-900" : "text-green-900"}`}>
                       {u.name}
                     </a>
-                    <p class={`text-xs mt-0.5 ${u.subTextCls}`}>
+                    <p class={`text-xs mt-0.5 ${u.isUrgent ? "text-orange-700" : "text-green-700"}`}>
                       접수 마감: {u.registration_end}
-                      {u.showDdaySub && ` (D-${u.daysLeft})`}
+                      {!u.isUrgent && 7 >= u.daysLeft && ` (D-${u.daysLeft})`}
                       {u.exam_date && ` · 시험일: ${u.exam_date}`}
                     </p>
                   </div>
                 </div>
                 <a
                   href={`${BASE}contests/${u.id}/`}
-                  class={`shrink-0 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${u.btnCls}`}
+                  class={`shrink-0 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${u.isUrgent ? "bg-orange-500 text-white hover:bg-orange-600" : "bg-green-600 text-white hover:bg-green-700"}`}
                 >
                   자세히 보기 →
                 </a>
@@ -444,7 +432,36 @@ urgentContests.sort((a, b) => a.daysLeft - b.daysLeft);
 
       <!-- 대회 목록 -->
       <section id="contests">
-        <h2 class="text-base font-semibold text-gray-700 mb-3">📋 전체 경시대회</h2>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold text-gray-700">📋 전체 경시대회</h2>
+          <span id="contest-count" class="text-sm text-gray-500">{contests.length}개</span>
+        </div>
+
+        <!-- 필터 패널 -->
+        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4 mb-4 flex flex-col gap-3">
+          <input
+            id="contest-search"
+            type="text"
+            placeholder="🔍 대회명으로 검색..."
+            class="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-300 placeholder:text-gray-400"
+          />
+          <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs text-gray-400 shrink-0">과목</span>
+            <button data-filter-subject="all" class="text-xs px-3 py-1.5 rounded-full font-medium bg-indigo-600 text-white transition-all">전체</button>
+            {Object.keys(subjectSlugMap).map(subj => (
+              <button data-filter-subject={subj} class="text-xs px-3 py-1.5 rounded-full font-medium bg-gray-100 text-gray-600 transition-all">{subj}</button>
+            ))}
+          </div>
+          <div class="flex flex-wrap gap-2 items-center">
+            <span class="text-xs text-gray-400 shrink-0">학년</span>
+            <button data-filter-grade="all" class="text-xs px-3 py-1.5 rounded-full font-medium bg-indigo-600 text-white transition-all">전체</button>
+            {Object.keys(gradeSlugMap).map(grade => (
+              <button data-filter-grade={grade} class="text-xs px-3 py-1.5 rounded-full font-medium bg-gray-100 text-gray-600 transition-all">{grade}</button>
+            ))}
+          </div>
+        </div>
+
+        <div id="contest-empty" style="display:none" class="text-center text-gray-400 py-8 text-sm">조건에 맞는 경시대회가 없습니다.</div>
         <div class="grid gap-4">
           {[...contests]
             .sort((a, b) => {
@@ -460,7 +477,12 @@ urgentContests.sort((a, b) => a.daysLeft - b.daysLeft);
               const nextExam = getNextExam(d.schedule);
               const dday = nextExam?.exam_date ? getDday(nextExam.exam_date) : null;
               return (
-                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow">
+                <div
+                  class="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow"
+                  data-subject={d.subject}
+                  data-grades={d.target.join(",")}
+                  data-name={d.name}
+                >
                   <div class="flex items-start justify-between gap-4">
                     <div class="flex-1 min-w-0">
                       <div class="flex items-center gap-2 flex-wrap mb-1">
@@ -542,5 +564,74 @@ urgentContests.sort((a, b) => a.daysLeft - b.daysLeft);
     <footer class="text-center text-xs text-gray-400 py-8 mt-4">
       © 2026 {SITE_NAME} · 데이터 오류 제보 환영 · 출처: contestkorea.com
     </footer>
+
+    <script is:inline>
+      (function () {
+        const cards = document.querySelectorAll('[data-subject]');
+        const countEl = document.getElementById('contest-count');
+        const emptyEl = document.getElementById('contest-empty');
+        let activeSubject = 'all';
+        let activeGrade = 'all';
+        let searchText = '';
+
+        function updateFilter() {
+          let count = 0;
+          cards.forEach(function (card) {
+            const subject = card.dataset.subject || '';
+            const grades = card.dataset.grades ? card.dataset.grades.split(',') : [];
+            const name = (card.dataset.name || '').toLowerCase();
+
+            const subjectMatch = activeSubject === 'all' || subject === activeSubject;
+            const gradeMatch = activeGrade === 'all' || grades.includes(activeGrade);
+            const textMatch = !searchText || name.includes(searchText);
+
+            const visible = subjectMatch && gradeMatch && textMatch;
+            card.style.display = visible ? '' : 'none';
+            if (visible) count++;
+          });
+
+          if (countEl) countEl.textContent = count + '개';
+          if (emptyEl) emptyEl.style.display = count === 0 ? 'block' : 'none';
+        }
+
+        function setActiveBtn(groupAttr, value) {
+          const attr = 'data-filter-' + groupAttr;
+          document.querySelectorAll('[' + attr + ']').forEach(function (btn) {
+            const isActive = btn.getAttribute(attr) === value;
+            if (isActive) {
+              btn.classList.remove('bg-gray-100', 'text-gray-600');
+              btn.classList.add('bg-indigo-600', 'text-white');
+            } else {
+              btn.classList.remove('bg-indigo-600', 'text-white');
+              btn.classList.add('bg-gray-100', 'text-gray-600');
+            }
+          });
+        }
+
+        document.querySelectorAll('[data-filter-subject]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            activeSubject = this.getAttribute('data-filter-subject') || 'all';
+            setActiveBtn('subject', activeSubject);
+            updateFilter();
+          });
+        });
+
+        document.querySelectorAll('[data-filter-grade]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            activeGrade = this.getAttribute('data-filter-grade') || 'all';
+            setActiveBtn('grade', activeGrade);
+            updateFilter();
+          });
+        });
+
+        const searchEl = document.getElementById('contest-search');
+        if (searchEl) {
+          searchEl.addEventListener('input', function () {
+            searchText = this.value.trim().toLowerCase();
+            updateFilter();
+          });
+        }
+      })();
+    </script>
   </body>
 </html>
