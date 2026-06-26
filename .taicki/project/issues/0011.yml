@@ -1,0 +1,14 @@
+id: 11
+title: 홈 페이지 '지금 접수 중인 대회' 섹션 추가 — 즉각 액션 유도
+status: in_progress
+priority: high
+created: '2026-06-26'
+definition_of_done: 홈 페이지에 현재 접수 중인 대회와 7일 이내 마감 대회를 표시하는 섹션이 추가되어, 실제 접수 중 데이터가 있을
+  때 카드가 노출되고 빌드가 통과된 상태
+labels:
+  - feature
+  - ux
+session_id: d4cc5106-cf67-4180-ac3d-6997f54f1c72
+body: |
+  통계 요약 아래, 연간 캘린더 위에 '지금 확인하세요' 섹션 삽입. registration_start <= 오늘 <= registration_end인 경우 '접수 중', registration_end가 오늘부터 7일 이내면 '마감 임박' 표시. 해당 대회가 없으면 섹션 미표시.
+updated: '2026-06-26'

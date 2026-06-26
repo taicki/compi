@@ -126,6 +126,42 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
   return toPercent(d.toISOString().split("T")[0]);
 });
 
+// 접수 중 / 마감 임박(7일 이내) 대회 계산
+type UrgentContest = {
+  id: string;
+  name: string;
+  subject: string;
+  registration_end: string;
+  exam_date: string | null | undefined;
+  daysLeft: number;
+  isOpen: boolean;
+};
+
+const urgentContests: UrgentContest[] = [];
+for (const c of contests) {
+  for (const s of c.data.schedule) {
+    if (!s.registration_end) continue;
+    const endMs = new Date(s.registration_end).getTime();
+    const startMs = s.registration_start ? new Date(s.registration_start).getTime() : endMs;
+    const nowMs = TODAY.getTime();
+    const daysLeft = Math.ceil((endMs - nowMs) / 86400000);
+    const isOpen = startMs <= nowMs && nowMs <= endMs;
+    const isClosingSoon = daysLeft >= 0 && daysLeft <= 7 && !isOpen;
+    if (isOpen || isClosingSoon) {
+      urgentContests.push({
+        id: c.data.id,
+        name: c.data.name,
+        subject: c.data.subject,
+        registration_end: s.registration_end,
+        exam_date: s.exam_date,
+        daysLeft,
+        isOpen,
+      });
+    }
+  }
+}
+urgentContests.sort((a, b) => a.daysLeft - b.daysLeft);
+
 ---
 
 <!doctype html>
@@ -183,6 +219,39 @@ const monthPercents = [0,1,2,3,4,5,6,7,8,9,10,11].map(m => {
           </div>
         </div>
       </div>
+
+      <!-- 지금 확인하세요 — 접수 중 / 마감 임박 -->
+      {urgentContests.length > 0 && (
+        <section class="mb-8">
+          <h2 class="text-base font-semibold text-gray-700 mb-3">⚡ 지금 확인하세요</h2>
+          <div class="grid gap-3">
+            {urgentContests.map((u) => (
+              <div class={`rounded-xl border p-4 flex items-center justify-between gap-4 ${u.isOpen ? "bg-green-50 border-green-200" : "bg-orange-50 border-orange-200"}`}>
+                <div class="flex items-center gap-3 min-w-0">
+                  <span class={`shrink-0 text-xs font-bold px-2.5 py-1 rounded-full ${u.isOpen ? "bg-green-500 text-white" : "bg-orange-400 text-white"}`}>
+                    {u.isOpen ? "접수 중" : `D-${u.daysLeft} 마감`}
+                  </span>
+                  <div class="min-w-0">
+                    <a href={`${BASE}contests/${u.id}/`} class={`font-semibold text-sm hover:underline truncate block ${u.isOpen ? "text-green-900" : "text-orange-900"}`}>
+                      {u.name}
+                    </a>
+                    <p class={`text-xs mt-0.5 ${u.isOpen ? "text-green-700" : "text-orange-700"}`}>
+                      접수 마감: {u.registration_end}
+                      {u.exam_date && ` · 시험일: ${u.exam_date}`}
+                    </p>
+                  </div>
+                </div>
+                <a
+                  href={`${BASE}contests/${u.id}/`}
+                  class={`shrink-0 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors ${u.isOpen ? "bg-green-600 text-white hover:bg-green-700" : "bg-orange-500 text-white hover:bg-orange-600"}`}
+                >
+                  자세히 보기 →
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       <!-- 연간 캘린더 -->
       <section id="calendar" class="mb-10">
