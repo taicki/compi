@@ -1,0 +1,27 @@
+id: 14
+title: 대회 상세 페이지 BreadcrumbList JSON-LD 추가 — 검색 리치 스니펫 확장
+status: closed
+priority: medium
+created: '2026-06-28'
+labels:
+  - seo
+  - feature
+body: |
+  ## 현상
+  대회 상세 페이지(/contests/{id}/)에 HTML 브레드크럼은 있지만 BreadcrumbList JSON-LD 구조화 데이터가 없다.
+  과목별(/subjects/) 및 학년별(/grades/) 페이지에는 이미 BreadcrumbList JSON-LD가 구현되어 있어 일관성이 없다.
+
+  ## 구글 리치 스니펫 효과
+  - 검색 결과에서 URL 대신 '홈 > 수학 경시대회 > KMO 한국수학올림피아드' 형태 브레드크럼 표시
+  - CTR 향상 기대
+
+  ## 해결 방향
+  1. contests/[id].astro의 기존 Event JSON-LD에 BreadcrumbList를 @graph로 병합
+  2. 브레드크럼 구조: 홈 > {subject} 경시대회 > {대회명}
+  3. 과목 페이지가 없는 subject도 홈 > 대회명 2단 fallback
+
+  ## 완료 기준
+  - 모든 대회 상세 페이지에 BreadcrumbList JSON-LD 포함
+  - 빌드 통과
+updated: '2026-06-28'
+closed: '2026-06-28'
