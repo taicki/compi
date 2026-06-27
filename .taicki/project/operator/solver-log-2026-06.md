@@ -1,3 +1,12 @@
+## 2026-06-27 14:37 KST — 이슈 #0013: 과목별·학년별 페이지 ItemList JSON-LD 추가
+- **결과**: 성공
+- **변경 파일**:
+  - `site/src/pages/subjects/[subject].astro` (ItemList + BreadcrumbList JSON-LD 추가)
+  - `site/src/pages/grades/[grade].astro` (동일)
+- **커밋**: 9631118
+- **빌드**: 통과 ✓ (28 pages)
+- **사유**: 기존 open 이슈 모두 외부 의존. 목록 페이지 JSON-LD 누락 발견 → 신규 이슈 #0013 생성 후 처리
+
 ## 2026-06-26 14:35 KST — 이슈 #0011: 홈 페이지 '지금 확인하세요' 섹션 추가
 - **결과**: 성공
 - **변경 파일**:
