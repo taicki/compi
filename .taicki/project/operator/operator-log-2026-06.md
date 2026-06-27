@@ -1,5 +1,13 @@
 # Operator Log — 2026-06
 
+## 2026-06-28 05:21 KST — 이슈 #0014: 대회 상세 페이지 BreadcrumbList JSON-LD 추가
+- **결과**: 성공
+- **변경 파일**: `site/src/pages/contests/[id].astro` (BreadcrumbList @graph 병합), `site/src/utils/contest.ts` (safeJsonLd 유틸), `site/src/pages/subjects/[subject].astro`, `site/src/pages/grades/[grade].astro` (safeJsonLd 적용)
+- **커밋**: 578169d (feat), f9b835c (chore)
+- **빌드**: 통과 ✓ (28페이지)
+- **소요**: 8분
+- **내용**: 대회 상세 페이지에 BreadcrumbList JSON-LD 추가. 홈 > 과목 경시대회 > 대회명 3단 구조. safeJsonLd() 유틸로 3개 페이지 HTML 인코딩 통일. 코드 리뷰어가 단일 패스 정규식·baseUrl 상수 추출 등 추가 정리 반영.
+
 ## 2026-06-27 05:32 KST — 이슈 #0012: 대회 목록 즉시 필터링 — 과목/학년/텍스트 검색으로 찾기
 - **결과**: 성공
 - **변경 파일**: `site/src/pages/index.astro` (필터 패널 + data 속성 + JS 스크립트)
