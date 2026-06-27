@@ -1,0 +1,14 @@
+id: 13
+title: 과목별·학년별 페이지 ItemList JSON-LD 추가 — SEO 리치 스니펫 확보
+status: closed
+priority: high
+created: '2026-06-27'
+definition_of_done: '[subject].astro와 [grade].astro에 schema.org ItemList JSON-LD가
+  추가됐고 빌드가 통과된 상태'
+labels:
+  - seo
+session_id: abbb93f6-4c7a-495b-92e3-1959407d042c
+body: |
+  ## 문제\n[subject].astro, [grade].astro에 구조화 데이터(JSON-LD)가 없다.\n상세 페이지([id].astro)에는 Event JSON-LD가 있지만 목록 페이지에는 없어 SEO 리치 스니펫 기회를 놓치고 있다.\n\n## 해결 방향\n- [subject].astro: ItemList + BreadcrumbList JSON-LD 추가\n  - 각 대회를 ListItem으로 마크업 (name, url, description)\n- [grade].astro: 동일하게 ItemList + BreadcrumbList JSON-LD 추가\n\n## 기대 효과\n'수학 경시대회 일정', '초등 경시대회' 등 과목/학년 키워드 검색 시 리치 스니펫 노출 가능성 증가 → CTR 향상 → 검색 유입 증가
+updated: '2026-06-27'
+closed: '2026-06-27'
