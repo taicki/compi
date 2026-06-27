@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { SITE_NAME, SITE_URL } from "../../config.ts";
-import { subjectColors, levelLabels, getDday, todayStr, slugToSubject, subjectSlugMap, getNextExam } from "../../utils/contest.ts";
+import { subjectColors, levelLabels, getDday, todayStr, slugToSubject, subjectSlugMap, getNextExam, safeJsonLd } from "../../utils/contest.ts";
 import BaseHead from "../../components/BaseHead.astro";
 import "../../styles/global.css";
 
@@ -85,7 +85,7 @@ const jsonLd = {
       description={description}
       ogUrl={pageUrl}
     />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026')} />
+    <script type="application/ld+json" set:html={safeJsonLd(jsonLd)} />
   </head>
   <body class="bg-gray-50 min-h-screen">
 

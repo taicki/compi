@@ -83,3 +83,13 @@ export function getNextExam<T extends { exam_date?: string | null }>(
       .sort((a, b) => (a.exam_date! > b.exam_date! ? 1 : -1))[0] ?? null
   );
 }
+
+/**
+ * JSON-LD 객체를 <script> 태그 내에 안전하게 삽입할 문자열로 직렬화한다.
+ * HTML 파서가 </script>를 잘못 닫지 않도록 <, >, &를 유니코드 이스케이프로 치환한다.
+ */
+export function safeJsonLd(obj: unknown): string {
+  return JSON.stringify(obj).replace(/[<>&]/g, (c) =>
+    c === "<" ? "\\u003c" : c === ">" ? "\\u003e" : "\\u0026",
+  );
+}

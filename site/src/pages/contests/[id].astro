@@ -1,7 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import { SITE_NAME, SITE_URL } from "../../config.ts";
-import { subjectColors, levelLabels, getDday, todayStr, subjectSlugMap, gradeSlugMap, getNextExam } from "../../utils/contest.ts";
+import { subjectColors, levelLabels, getDday, todayStr, subjectSlugMap, gradeSlugMap, getNextExam, safeJsonLd } from "../../utils/contest.ts";
 import BaseHead from "../../components/BaseHead.astro";
 import "../../styles/global.css";
 
@@ -23,8 +23,9 @@ const dday = getDday(nextExam?.exam_date);
 const pageTitle = `${d.name} 2026 일정·접수 | ${SITE_NAME}`;
 const pageDescription = `${d.name} 2026년 일정 안내. 접수 기간, 시험일, 응시료, 대상 학년 등 핵심 정보를 한눈에 확인하세요. ${d.summary}`;
 const BASE = import.meta.env.BASE_URL;
+const baseUrl = `${SITE_URL}${BASE}`;
 
-// Schema.org JSON-LD — 시험일이 있는 회차만 Event로 마크업
+// Schema.org JSON-LD — Event + BreadcrumbList
 const pageUrl = `${SITE_URL}${BASE}contests/${d.id}/`;
 const jsonLdEvents = d.schedule
   .filter((s) => s.exam_date)
@@ -54,12 +55,22 @@ const jsonLdEvents = d.schedule
       : undefined,
   }));
 
-const jsonLd =
-  jsonLdEvents.length === 1
-    ? { "@context": "https://schema.org", ...jsonLdEvents[0] }
-    : jsonLdEvents.length > 1
-      ? { "@context": "https://schema.org", "@graph": jsonLdEvents }
-      : null;
+const subjectSlug = subjectSlugMap[d.subject];
+const breadcrumbLd = {
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "홈", item: baseUrl },
+    ...(subjectSlug
+      ? [{ "@type": "ListItem", position: 2, name: `${d.subject} 경시대회`, item: `${baseUrl}subjects/${subjectSlug}/` }]
+      : []),
+    { "@type": "ListItem", position: subjectSlug ? 3 : 2, name: d.name, item: pageUrl },
+  ],
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [...jsonLdEvents, breadcrumbLd],
+};
 ---
 
 <!doctype html>
@@ -70,10 +81,7 @@ const jsonLd =
       description={pageDescription}
       ogUrl={pageUrl}
     />
-    <!-- Schema.org JSON-LD -->
-    {jsonLd && (
-      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    )}
+    <script type="application/ld+json" set:html={safeJsonLd(jsonLd)} />
   </head>
   <body class="bg-gray-50 min-h-screen">
 
