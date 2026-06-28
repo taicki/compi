@@ -1,3 +1,13 @@
+## 2026-06-28 14:34 KST — 이슈 #0015: 콩쿨 캘린더 추가 — 피아노/바이올린 등 전국 음악 콩쿨 일정 데이터 파일럿
+- **결과**: 성공
+- **변경 파일**:
+  - `site/src/utils/contest.ts` (subjectColors·subjectSlugMap에 음악 추가)
+  - `site/src/pages/subjects/[subject].astro` (SUBJECT_CONFIG에 music 추가)
+- **커밋**: 57c78f9
+- **빌드**: 통과 ✓ (32 pages)
+- **사유**: subjectSlugMap에 음악이 누락돼 /subjects/music/ 페이지가 생성되지 않던 문제 해결. 3개 음악 콩쿨(이화경향·삼익자일러·음협) 필터링 동작 확인. DoD(10개 이상) 부분 달성 — 데이터 추가는 신규 이슈로 분리 가능.
+
+
 ## 2026-06-27 14:37 KST — 이슈 #0013: 과목별·학년별 페이지 ItemList JSON-LD 추가
 - **결과**: 성공
 - **변경 파일**:
