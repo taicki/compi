@@ -1,5 +1,14 @@
 # Operator Log — 2026-06
 
+## 2026-06-29 05:22 KST — 이슈 #0016: og-default.png 생성 — 소셜 공유 프리뷰 이미지 누락 수정
+- **결과**: 성공
+- **변경 파일**: `site/public/og-default.png` (신규 1200×630 PNG), `site/src/components/BaseHead.astro` (og:image:width/height/type, twitter:image:alt 추가)
+- **커밋**: a7ea5ad (feat), e96872f (chore issue), 3d58ff2 (chore close)
+- **빌드**: 통과 ✓ (32페이지)
+- **소요**: 9분
+- **내용**: BaseHead.astro가 참조하던 og-default.png가 누락되어 전 페이지 소셜 공유 이미지 깨짐. rsvg-convert로 보라 그라디언트 배경 + 한글 텍스트 1200×630 PNG 생성. 코드리뷰에서 og:image 크기/MIME 태그 3개 추가 반영.
+
+
 ## 2026-06-28 05:21 KST — 이슈 #0014: 대회 상세 페이지 BreadcrumbList JSON-LD 추가
 - **결과**: 성공
 - **변경 파일**: `site/src/pages/contests/[id].astro` (BreadcrumbList @graph 병합), `site/src/utils/contest.ts` (safeJsonLd 유틸), `site/src/pages/subjects/[subject].astro`, `site/src/pages/grades/[grade].astro` (safeJsonLd 적용)
