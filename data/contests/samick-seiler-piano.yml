@@ -1,0 +1,29 @@
+id: samick-seiler-piano
+name: 삼익·자일러 피아노 콩쿠르
+name_en: Samick-Seiler Piano Competition
+organizer: 삼익문화재단
+subject: 음악
+target: [초등, 중등, 고등]
+level: 중급
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: 예선
+    registration_start: "2026-02-02"
+    registration_end: "2026-03-31"
+    exam_date: "2026-05-04"
+    result_date: null
+  - year: 2026
+    round: 본선
+    registration_start: null
+    registration_end: null
+    exam_date: "2026-05-11"
+    result_date: null
+fee: 180000
+official_url: http://www.samickcc.com/
+summary: 삼익문화재단 주관 피아노 단일 부문 콩쿠르. 2026년 제53회. 초등 1~2학년부터 대학·일반부까지 학년별로 세분화되어 있어 어린 학생도 참가 가능.
+pros:
+  - 초등 1학년부터 참가 가능한 학년별 세분화 부문
+  - 국내 유서 깊은 피아노 전문 콩쿠르 (53회 역사)
+  - 삼익문화재단 운영으로 안정적 대회 운영
+data_status: confirmed

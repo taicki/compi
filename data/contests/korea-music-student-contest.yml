@@ -1,0 +1,23 @@
+id: korea-music-student-contest
+name: 한국음악협회 전국학생음악경연대회
+name_en: Korean Music Association National Student Music Competition
+organizer: 한국음악협회
+subject: 음악
+target: [초등, 중등, 고등]
+level: 중급
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: 본선
+    registration_start: "2026-06-08"
+    registration_end: "2026-06-29"
+    exam_date: "2026-07-30"
+    result_date: null
+fee: null
+official_url: http://www.musiccontest.or.kr/
+summary: 한국음악협회 주관 전국 규모 학생 음악 경연대회 (학생음협콩쿠르). 한국음악·서양음악 다부문, 초등~대학원생 참가 가능. 2026년 제39회. 서울시립대학교 음악관에서 개최.
+pros:
+  - 한국음악협회 공식 인증 전국 규모 대회
+  - 한국음악(국악)·서양음악 모두 포함한 다부문 경연
+  - 초등부터 대학원생까지 폭넓은 참가 자격
+data_status: unconfirmed

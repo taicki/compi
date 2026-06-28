@@ -1,0 +1,23 @@
+id: ewha-kyunghyang-concours
+name: 이화경향음악콩쿠르
+name_en: Ewha-Kyunghyang Music Concours
+organizer: 이화여자대학교·경향신문
+subject: 음악
+target: [초등, 중등, 고등]
+level: 심화
+frequency: 연1회
+schedule:
+  - year: 2026
+    round: 예·본선
+    registration_start: "2026-02-05"
+    registration_end: "2026-02-26"
+    exam_date: "2026-03-25"
+    result_date: null
+fee: 180000
+official_url: https://business.khan.co.kr/ekconcours
+summary: 이화여대와 경향신문이 공동 주최하는 국내 최권위 음악콩쿠르 중 하나. 피아노·현악·관악·성악 등 다부문으로 초등부부터 대학·일반부까지 운영. 2026년은 제75회.
+pros:
+  - 국내 최고 권위 콩쿨 중 하나로 입상 시 이력에 큰 강점
+  - 피아노·바이올린·비올라·첼로·플루트·클라리넷·성악 등 다부문
+  - 초등 저학년부터 참가 가능
+data_status: confirmed

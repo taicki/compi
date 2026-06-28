@@ -8,7 +8,7 @@ const contests = defineCollection({
     name: z.string(),
     name_en: z.string().optional(),
     organizer: z.string(),
-    subject: z.enum(["수학", "과학", "영어", "코딩", "국어", "역사", "종합"]),
+    subject: z.enum(["수학", "과학", "영어", "코딩", "국어", "역사", "종합", "음악"]),
     target: z.array(z.enum(["초등", "중등", "고등"])),
     level: z.enum(["입문", "중급", "심화"]),
     frequency: z.enum(["연1회", "연2회", "기타"]),
