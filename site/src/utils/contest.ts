@@ -8,6 +8,7 @@ export const subjectColors: Record<string, string> = {
   국어: "bg-red-100 text-red-800",
   역사: "bg-orange-100 text-orange-800",
   종합: "bg-gray-100 text-gray-800",
+  음악: "bg-pink-100 text-pink-800",
 };
 
 export const levelLabels: Record<string, string> = {
@@ -34,6 +35,7 @@ export const subjectSlugMap: Record<string, string> = {
   과학: "science",
   영어: "english",
   코딩: "coding",
+  음악: "music",
 };
 
 /** 슬러그 → 과목명(한글) 역방향 맵 — subjectSlugMap에서 파생 (중복 선언 금지) */
