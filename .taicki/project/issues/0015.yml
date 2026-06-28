@@ -1,6 +1,6 @@
 id: 15
 title: 콩쿨 캘린더 추가 — 피아노/바이올린 등 전국 음악 콩쿨 일정 데이터 파일럿
-status: open
+status: closed
 priority: medium
 created: '2026-06-28'
 definition_of_done: 전국 규모 음악 콩쿨 10개 이상 data/contests/에 추가되고, 사이트에서 music 카테고리로 필터링되는
@@ -10,3 +10,5 @@ labels:
 session_id: 6d5d1ab0-49a7-4323-8960-fc292899a20d
 body: |
   와이프·첫째 제안. 초중등 자녀 학부모 타겟이 겹쳐 자연스러운 확장. 피아노·바이올린 등 전국 단위 콩쿨(이화경향, 음협, 한국피아노콩쿨 등)부터 파일럿 수집. 카테고리를 music으로 분리해 기존 경시대회 브랜드 포커스 유지.
+updated: '2026-06-28'
+closed: '2026-06-28'
