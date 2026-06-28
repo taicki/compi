@@ -1,0 +1,10 @@
+id: 16
+title: og-default.png 생성 — 소셜 공유 프리뷰 이미지 누락 수정
+status: open
+priority: medium
+created: '2026-06-29'
+labels:
+  - seo
+  - bugfix
+body: |
+  ## 현상\nBaseHead.astro가 ${SITE_URL}${BASE}og-default.png를 기본 OG 이미지로 참조하지만, site/public/에 해당 파일이 없다. 모든 페이지의 소셜 공유(카카오톡, 트위터 등) 시 이미지가 깨진 상태.\n\n## 해결 방향\n1. rsvg-convert로 SVG → 1200×630 PNG 생성\n2. site/public/og-default.png로 배치\n3. 빌드 후 dist에 포함 확인\n\n## 완료 기준\n- site/dist/og-default.png가 빌드 아티팩트에 포함됨\n- 1200×630 PNG, 소셜 프리뷰 이미지 정상 노출
