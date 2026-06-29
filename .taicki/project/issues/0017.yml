@@ -1,0 +1,10 @@
+id: 17
+title: 대회 상세 페이지 — 같은 과목 관련 대회 추천 섹션 추가
+status: in_progress
+priority: medium
+created: '2026-06-29'
+definition_of_done: contests/[id].astro 하단에 같은 과목의 다른 대회 카드가 표시되고 빌드가 통과된 상태
+session_id: bc8f1e0b-b44a-4eee-92e8-142249f34477
+body: |
+  현재 대회 상세 페이지 하단에 '전체 경시대회 보기' 링크만 있음. 같은 과목의 다른 대회를 카드 형태로 추천하면 내부 링크 강화(SEO) + 사용자가 관련 대회를 빠르게 탐색 가능. 구현: getCollection('contests')에서 같은 subject이고 id가 다른 대회 필터링 → 최대 3개 카드 표시 → 상세 보기 링크 포함.
+updated: '2026-06-29'
