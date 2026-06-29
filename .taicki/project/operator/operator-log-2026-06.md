@@ -1,5 +1,13 @@
 # Operator Log — 2026-06
 
+## 2026-06-30 05:18 KST — 이슈 #0018: FAQ 페이지 생성 — 경시대회 자주 묻는 질문 롱테일 SEO
+- **결과**: 성공
+- **변경 파일**: `site/src/pages/faq.astro` (신규), `site/src/pages/index.astro` (footer FAQ 링크 추가)
+- **커밋**: f7a6bab (feat), 7ff9010 (chore close)
+- **빌드**: 통과 ✓ (32 → 33페이지)
+- **소요**: 5분
+- **내용**: FAQ 10개 + FAQPage JSON-LD 구조화 데이터. 기존 open 이슈(#2/#3/#6)가 모두 외부 의존/사용자 결정 필요해 신규 이슈 생성 후 작업.
+
 ## 2026-06-29 05:22 KST — 이슈 #0016: og-default.png 생성 — 소셜 공유 프리뷰 이미지 누락 수정
 - **결과**: 성공
 - **변경 파일**: `site/public/og-default.png` (신규 1200×630 PNG), `site/src/components/BaseHead.astro` (og:image:width/height/type, twitter:image:alt 추가)
