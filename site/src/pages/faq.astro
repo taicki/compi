@@ -1,0 +1,120 @@
+---
+import { SITE_NAME, SITE_URL } from "../config.ts";
+import BaseHead from "../components/BaseHead.astro";
+import "../styles/global.css";
+
+const BASE = import.meta.env.BASE_URL;
+
+const faqs = [
+  {
+    q: "경시대회란 무엇인가요?",
+    a: "경시대회는 수학·과학·영어·코딩 등 특정 과목에서 학생들의 실력을 겨루는 대회입니다. 전국 단위 대회부터 지역 대회까지 다양하며, 한국수학올림피아드(KMO)·성대경시·HME 해법수학 등이 대표적입니다.",
+  },
+  {
+    q: "초등학생도 경시대회에 참가할 수 있나요?",
+    a: "네, 많은 경시대회가 초등학생을 대상으로 합니다. HME 해법수학경시대회·KMA 한국수학학력평가·KMC 한국수학경시대회·성대경시 수학 부문 등이 초등 학년 대상을 포함합니다. 대회마다 참가 학년이 다르므로 대회 상세 페이지에서 대상 학년을 확인하세요.",
+  },
+  {
+    q: "주요 경시대회 접수비는 얼마인가요?",
+    a: "대회마다 접수비가 다릅니다. HME 해법수학은 약 40,000원, KMC 한국수학경시대회는 약 30,000원 수준입니다. 올림피아드 계열(KMO, KJMO 등)은 무료 또는 소액 참가비인 경우도 있습니다. 정확한 금액은 각 대회 공식 사이트에서 확인하세요.",
+  },
+  {
+    q: "수학 경시대회를 처음 준비한다면 어떤 대회부터 시작할까요?",
+    a: "처음이라면 HME 해법수학경시대회나 KMA 한국수학학력평가를 추천합니다. 두 대회 모두 난이도가 상대적으로 낮고, 전국 단위 평가로 현재 실력을 파악하기 좋습니다. 이후 KMC나 성대경시로 단계적으로 도전하는 방식이 일반적입니다.",
+  },
+  {
+    q: "경시대회와 올림피아드의 차이는 무엇인가요?",
+    a: "경시대회는 일반적으로 학교 밖에서 열리는 실력 측정 대회를 가리키며, 올림피아드는 국제 대회(국제수학올림피아드 등)에 출전할 국가대표를 선발하는 과정을 포함하는 대회입니다. 한국수학올림피아드(KMO)나 한국과학올림피아드(KJSO)가 대표적이며 난이도가 매우 높습니다.",
+  },
+  {
+    q: "접수는 언제 해야 하나요?",
+    a: "대회마다 접수 기간이 다릅니다. 주요 수학 경시대회는 시험일 1~3개월 전에 접수가 시작되는 경우가 많습니다. 컴피 홈페이지의 '지금 확인하세요' 섹션에서 현재 접수 중인 대회와 마감일을 확인하세요.",
+  },
+  {
+    q: "여러 경시대회에 동시에 참가할 수 있나요?",
+    a: "네, 가능합니다. 단, 시험일이 겹칠 수 있으므로 대회별 시험일을 미리 확인하는 것이 중요합니다. 컴피의 월별 캘린더에서 시험일·접수 마감일을 한눈에 확인할 수 있습니다.",
+  },
+  {
+    q: "경시대회 수상 이력이 입시에 도움이 되나요?",
+    a: "2028 대입 개편으로 수상 실적의 대입 활용에 변화가 있을 수 있습니다. 최신 입시 정책을 반드시 확인하시고, 경시대회 수상보다 실력 향상 자체에 초점을 맞추는 것을 권장합니다.",
+  },
+  {
+    q: "과목별 대표 경시대회는 어떤 것이 있나요?",
+    a: "수학: HME 해법수학·KMA·KMC·KMO(올림피아드)·성대경시. 과학: 한국과학올림피아드(KJSO)·물리올림피아드(KPhO)·성대경시 과학 부문. 영어: KUT 영어경시·MBC 영어경시·전국영어경시. 코딩: 한국정보올림피아드(KOI)·코드페어(Kodefare). 각 과목 페이지에서 상세 목록을 확인할 수 있습니다.",
+  },
+  {
+    q: "대회 데이터에 오류가 있으면 어떻게 신고하나요?",
+    a: "경시대회 일정·접수 정보는 주최 기관 발표 전에 변동될 수 있습니다. 오류를 발견하시면 페이지 하단의 '데이터 오류 제보' 링크를 통해 알려주세요. 신속하게 반영하겠습니다.",
+  },
+];
+
+const pageTitle = `자주 묻는 질문 (FAQ) | ${SITE_NAME}`;
+const pageDesc = "경시대회 참가 방법, 접수비, 대상 학년, 준비 방법 등 학부모와 학생이 가장 많이 묻는 질문을 모았습니다.";
+const pageUrl = `${SITE_URL}${BASE}faq/`;
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: f.a,
+    },
+  })),
+};
+---
+
+<html lang="ko">
+  <head>
+    <BaseHead title={pageTitle} description={pageDesc} ogUrl={pageUrl} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+  </head>
+  <body class="bg-gray-50 text-gray-900 min-h-screen">
+
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <div class="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+        <a href={`${BASE}`} class="text-lg font-bold text-indigo-600 hover:text-indigo-800">{SITE_NAME}</a>
+        <span class="text-gray-300">›</span>
+        <span class="text-sm text-gray-600">자주 묻는 질문</span>
+      </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+      <h1 class="text-2xl font-bold text-gray-900 mb-2">자주 묻는 질문</h1>
+      <p class="text-sm text-gray-500 mb-8">경시대회 참가를 준비하는 학부모·학생이 가장 많이 궁금해하는 질문을 모았습니다.</p>
+
+      <div class="space-y-4">
+        {faqs.map((faq, i) => (
+          <details class="bg-white rounded-xl border border-gray-200 shadow-sm group" open={i === 0}>
+            <summary class="flex items-center justify-between p-5 cursor-pointer list-none select-none hover:bg-gray-50 rounded-xl transition-colors">
+              <span class="font-semibold text-gray-800 pr-4">{faq.q}</span>
+              <span class="shrink-0 text-gray-400 group-open:rotate-180 transition-transform duration-200">▼</span>
+            </summary>
+            <div class="px-5 pb-5 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div class="mt-10 bg-indigo-50 rounded-xl p-5 border border-indigo-100">
+        <h2 class="font-semibold text-indigo-800 mb-2">대회 일정이 궁금하다면?</h2>
+        <p class="text-sm text-indigo-700 mb-3">과목별·학년별 경시대회 일정을 확인하세요.</p>
+        <div class="flex flex-wrap gap-2">
+          <a href={`${BASE}subjects/math/`} class="text-xs bg-white text-indigo-700 border border-indigo-200 rounded-full px-3 py-1.5 hover:bg-indigo-100 transition-colors">수학 경시대회</a>
+          <a href={`${BASE}subjects/science/`} class="text-xs bg-white text-indigo-700 border border-indigo-200 rounded-full px-3 py-1.5 hover:bg-indigo-100 transition-colors">과학 경시대회</a>
+          <a href={`${BASE}subjects/english/`} class="text-xs bg-white text-indigo-700 border border-indigo-200 rounded-full px-3 py-1.5 hover:bg-indigo-100 transition-colors">영어 경시대회</a>
+          <a href={`${BASE}subjects/coding/`} class="text-xs bg-white text-indigo-700 border border-indigo-200 rounded-full px-3 py-1.5 hover:bg-indigo-100 transition-colors">코딩 경시대회</a>
+          <a href={`${BASE}grades/elementary/`} class="text-xs bg-white text-indigo-700 border border-indigo-200 rounded-full px-3 py-1.5 hover:bg-indigo-100 transition-colors">초등 대회</a>
+          <a href={`${BASE}grades/middle/`} class="text-xs bg-white text-indigo-700 border border-indigo-200 rounded-full px-3 py-1.5 hover:bg-indigo-100 transition-colors">중등 대회</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-center text-xs text-gray-400 py-8 mt-4">
+      © 2026 {SITE_NAME} · <a href={`${BASE}`} class="underline hover:text-gray-600">홈으로</a>
+    </footer>
+  </body>
+</html>
