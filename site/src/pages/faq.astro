@@ -1,5 +1,6 @@
 ---
 import { SITE_NAME, SITE_URL } from "../config.ts";
+import { safeJsonLd } from "../utils/contest.ts";
 import BaseHead from "../components/BaseHead.astro";
 import "../styles/global.css";
 
@@ -69,7 +70,7 @@ const faqJsonLd = {
 <html lang="ko">
   <head>
     <BaseHead title={pageTitle} description={pageDesc} ogUrl={pageUrl} />
-    <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} />
+    <script type="application/ld+json" set:html={safeJsonLd(faqJsonLd)} />
   </head>
   <body class="bg-gray-50 text-gray-900 min-h-screen">
 
