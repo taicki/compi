@@ -1,3 +1,11 @@
+## 2026-06-30 14:37 KST — 이슈 #0019: 홈 페이지 WebSite JSON-LD 추가 — 구글 사이트링크 검색창 SEO
+- **결과**: 성공
+- **변경 파일**: `site/src/pages/index.astro`
+- **커밋**: df7ea85
+- **빌드**: 통과 ✓ (33 pages)
+- **사유**: 홈 페이지에 Schema.org WebSite + SearchAction JSON-LD 삽입. pageDescription 상수 추출(DRY). 구글 WebSite 인식 → 사이트링크 검색창 SEO 개선.
+
+
 ## 2026-06-29 14:37 KST — 이슈 #0017: 대회 상세 페이지 — 같은 과목 관련 대회 추천 섹션 추가
 - **결과**: 성공
 - **변경 파일**: `site/src/pages/contests/[id].astro`
