@@ -2,11 +2,30 @@
 import { getCollection } from "astro:content";
 import { SITE_NAME, SITE_TAGLINE, SITE_URL } from "../config.ts";
 import BaseHead from "../components/BaseHead.astro";
-import { subjectColors, levelLabels, getDday, TODAY, todayStr, subjectSlugMap, gradeSlugMap, getNextExam } from "../utils/contest.ts";
+import { subjectColors, levelLabels, getDday, TODAY, todayStr, subjectSlugMap, gradeSlugMap, getNextExam, safeJsonLd } from "../utils/contest.ts";
 import "../styles/global.css";
 
 const contests = await getCollection("contests");
 const BASE = import.meta.env.BASE_URL;
+const siteUrl = `${SITE_URL}${BASE}`;
+const pageDescription = "초등·중등·고등 경시대회 일정을 한눈에 확인하세요. 수학·과학·영어·코딩 경시대회 접수일·시험일·결과발표일 안내.";
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  alternateName: "컴피 경시대회 캘린더",
+  description: pageDescription,
+  url: siteUrl,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: `${siteUrl}?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
+};
 
 const subjectDot: Record<string, string> = {
   수학: "bg-blue-400",
@@ -174,9 +193,10 @@ urgentContests.sort((a, b) => a.daysLeft - b.daysLeft);
   <head>
     <BaseHead
       title={`${SITE_NAME} — ${SITE_TAGLINE}`}
-      description="초등·중등·고등 경시대회 일정을 한눈에 확인하세요. 수학·과학·영어·코딩 경시대회 접수일·시험일·결과발표일 안내."
-      ogUrl={`${SITE_URL}${BASE}`}
+      description={pageDescription}
+      ogUrl={siteUrl}
     />
+    <script type="application/ld+json" set:html={safeJsonLd(websiteJsonLd)} />
   </head>
   <body class="bg-gray-50 min-h-screen">
 
