@@ -48,6 +48,13 @@ git log --oneline -10
 git status
 ```
 
+**precheck 게이트 전제**: 이 세션이 실행됐다는 것은 `status: open` 이슈가 최소 1개 있다는 뜻이다
+(open이 0이면 scheduler가 precheck로 실행 자체를 스킵한다). 따라서 "처리할 이슈가 아예 없는" 경우는
+드물다 — open은 있으나 그중 solver 기준(ICE ≥ 4, 코드 즉시 구현)에 맞는 게 없을 때만 "적합한 이슈 없음"으로 종료한다.
+그런 이슈(도메인/호스팅 미확정·외부 계정 필요·수동 확인 선행 등)는 issue-manager가 blocked로 강등하는 게 정상 경로다.
+solver에서 반복적으로 걸러내게 되는 open 이슈가 보이면, 4단계 기록에 "왜 걸렀는지"를 남겨 manager가 강등하도록 신호를 준다.
+solver는 스스로 백로그를 발굴하지 않는다(발굴은 operator/manager 담당).
+
 **빠른 종료 조건**: solver-log-$(date +%Y-%m).md의 가장 최근 항목이 "적합한 이슈 없음"이고, 타임스탬프가 **9시간 이내**라면 → 1단계 건너뜀 → 즉시 4단계로 이동.
 
 ---
@@ -60,6 +67,7 @@ git status
 - 공식 사이트 수동 확인이 필요한 데이터 수집 작업
 - solver-log-$(date +%Y-%m).md에서 **최근 3회** 안에 시도한 이슈 (반복 방지)
 - 이슈 YAML에 스펙이 불명확하여 진행 불가
+- `status: blocked` 인 이슈
 
 제외 기준 통과 이슈를 대상으로 **ICE 스코어** 평가 후 최고점 1개 선택:
 
@@ -76,7 +84,10 @@ ICE = Impact × Confidence × Ease (최대 27점). 동점이면 Ease 높은 쪽 
 1. "이 기능으로 학부모/학생이 경시대회를 더 빨리 찾을 수 있는가?"
 2. "SEO 유입 또는 사용자 UX에 직접 기여하는가?"
 
-**적합한 이슈가 없으면**: solver-log-$(date +%Y-%m).md에 "적합한 이슈 없음" 기록 후 4단계로 이동.
+**적합한 이슈가 없으면**: solver-log-$(date +%Y-%m).md에 "적합한 이슈 없음"을 기록하되,
+**어떤 open 이슈를 왜 걸렀는지 한 줄씩** 남긴다(예: "#3 — GA4 계정 설정 선행 필요, 코드 대상 아님").
+이 기록이 issue-manager의 강등 판단 신호가 된다. 기록 후 → 4단계로 이동.
+(solver는 스스로 신규 이슈를 발굴·생성하지 않는다. 백로그 발굴은 operator/manager 책임.)
 
 ---
 
@@ -99,6 +110,26 @@ ICE = Impact × Confidence × Ease (최대 27점). 동점이면 Ease 높은 쪽 
    ```
    커밋 footer에 `Session: ${SESSION_ID}` 포함 + `git push`
    (배포 설정은 CLAUDE.md 참조 — 아직 미구성이면 빌드 확인 후 커밋만)
+
+---
+
+## 2-B단계: 작업 중 파생 이슈 자동 생성
+
+구현하면서 **발견했지만 이번 이슈 범위에 넣지 않은 후속 작업**이 있으면 이슈로 등록한다.
+이것이 solver가 백로그를 채우는 유일한 경로다(무관한 개선 임의 발굴은 여전히 금지 — 이번 작업에서
+**실제로 마주친** 파생 항목만).
+
+등록 대상 예:
+- 이번 수정으로 드러난 인접 버그·엣지케이스 (범위상 분리한 것)
+- 남긴 TODO/후속 작업, 보강이 필요한 데이터·페이지 공백
+- code-reviewer가 지적한 Medium/Low 중 이번에 반영하지 않은 항목
+
+```bash
+IT=/Users/taekjookim/.dotfiles/issue-tracker/scripts/issue_tracker.py
+python3 "$IT" create "<제목>" --priority low --label <라벨> --body "<맥락: 어느 작업에서 파생됐는지>"
+```
+
+파생 항목이 없으면 이 단계는 건너뛴다. 과잉 생성 금지.
 
 ---
 

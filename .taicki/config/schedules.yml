@@ -18,6 +18,8 @@
   title: 이슈 해결 에이전트 (14:30)
   cron: 30 14 * * *
   enabled: true
+  precheck: |-
+    python3 "$HOME/.dotfiles/issue-tracker/scripts/issue_tracker.py" list --json | python3 -c 'import json,sys; sys.exit(0 if json.load(sys.stdin).get("open") else 1)'
   prompt_file: .taicki/project/operator/solver-prompt.md
 
 - name: nightly-auto-commit
