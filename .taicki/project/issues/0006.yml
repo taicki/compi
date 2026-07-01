@@ -1,10 +1,12 @@
 id: 6
-title: "사이트 브랜드 이름 + 도메인 확정 — 독립 서비스 전제"
-created: "2026-06-01"
-status: open
+title: 사이트 브랜드 이름 + 도메인 확정 — 독립 서비스 전제
+created: '2026-06-01'
+status: blocked
 priority: high
-labels: [branding, setup]
-created_at: "2026-06-18"
+labels:
+  - branding
+  - setup
+created_at: '2026-06-18'
 body: |
   ## 현상
   - 에이전트 이름 "컴피"는 내부 호칭이며, 사이트 브랜드명으로 쓰기엔 어색하다.
@@ -48,3 +50,5 @@ body: |
   - 브랜드 이름·도메인 확정 (티제이님 결정)
   - #0007 이슈 언블락
   - CLAUDE.md 브랜드 섹션 업데이트 + 에이전트 이름 정리
+updated: '2026-07-02'
+blocked_reason: 브랜드명/도메인은 티제이님 결정 사항 (사람 판단 필요, 코드 작업 아님)

@@ -6,21 +6,24 @@ open:
     labels:
       - infra
       - deploy
+blocked:
   - id: 3
     title: GA4 + Google Search Console 설치 — 측정 도구 구축
-    status: open
+    status: blocked
     priority: high
     labels:
       - analytics
       - seo
+    blocked_reason: GA4/GSC는 계정 생성·인증 등 수동 세팅 필요, 또한 배포(#0002) 미완료로 측정 대상 URL 자체가
+      없어 완료 불가
   - id: 6
     title: 사이트 브랜드 이름 + 도메인 확정 — 독립 서비스 전제
-    status: open
+    status: blocked
     priority: high
     labels:
       - branding
       - setup
-blocked:
+    blocked_reason: 브랜드명/도메인은 티제이님 결정 사항 (사람 판단 필요, 코드 작업 아님)
   - id: 7
     title: 도메인 구입 + nginx 독립 서비스 전환 — taicki.dev 서브패스 탈출
     status: blocked

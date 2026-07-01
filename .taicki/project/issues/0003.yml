@@ -1,10 +1,12 @@
 id: 3
-title: "GA4 + Google Search Console 설치 — 측정 도구 구축"
-created: "2026-06-01"
-status: open
+title: GA4 + Google Search Console 설치 — 측정 도구 구축
+created: '2026-06-01'
+status: blocked
 priority: high
-labels: [analytics, seo]
-created_at: "2026-06-18"
+labels:
+  - analytics
+  - seo
+created_at: '2026-06-18'
 body: |
   ## 현상
   현재 어떤 측정 도구도 없다. 방문자 수, 검색 노출, 클릭률, 이탈률
@@ -28,3 +30,6 @@ body: |
   - GA4 Realtime 대시보드에서 방문 확인
   - GSC에 sitemap 제출 완료
   - 접수 링크 클릭 이벤트 추적 동작 확인
+updated: '2026-07-02'
+blocked_reason: GA4/GSC는 계정 생성·인증 등 수동 세팅 필요, 또한 배포(#0002) 미완료로 측정 대상 URL 자체가 없어 완료
+  불가
