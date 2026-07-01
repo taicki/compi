@@ -11,6 +11,7 @@
   title: 컴피 이슈 관리 에이전트
   cron: 20 7 * * *
   enabled: true
+  effort: medium
   prompt_file: .taicki/project/operator/issue-manager-prompt.md
 
 - name: issue-solver
