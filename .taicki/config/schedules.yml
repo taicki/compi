@@ -18,3 +18,21 @@
   cron: 30 14 * * *
   enabled: true
   prompt_file: .taicki/project/operator/solver-prompt.md
+
+- name: nightly-auto-commit
+  title: 새벽 자동 커밋+푸시 (dirty 상태 정리)
+  cron: 10 4 * * *
+  enabled: true
+  precheck: "git status --porcelain | grep -q ."
+  prompt: |-
+    working tree에 커밋되지 않은 변경사항이 있습니다 (precheck로 dirty 상태 확인됨).
+    commit-push 스킬을 사용해 의미 단위로 나눠 커밋하고 푸시하세요.
+
+    - 변경 성격이 다르면(코드/문서/설정 등) 커밋을 분리하세요.
+    - 커밋 메시지는 한국어로 상세히 작성하세요 (의도/범위 설명).
+    - 민감 정보가 담긴 파일(.env, credentials 등)은 커밋하지 마세요.
+    - 판단이 애매한 변경(진행 중으로 보이는 미완성 코드 등)은 건드리지 말고 보고만 하세요.
+
+    ## 요약
+    - 커밋한 개수와 각 커밋 요약
+    - 건드리지 않고 남겨둔 변경사항이 있다면 그 이유
