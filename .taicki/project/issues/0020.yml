@@ -1,0 +1,24 @@
+id: 20
+title: robots.txt 추가 — 사이트맵 발견 및 크롤링 지시
+status: in_progress
+priority: medium
+created: '2026-07-01'
+definition_of_done: site/dist/robots.txt가 빌드 결과물에 포함되고, sitemap-index.xml 경로를 정확히
+  가리키는 상태
+labels:
+  - seo
+body: |
+  ## 현상
+  site/public/에 robots.txt가 없다. @astrojs/sitemap 통합으로 sitemap-index.xml은
+  정상 생성되지만, 크롤러에게 이를 알려주는 표준 SEO 파일이 없어 검색엔진의 발견이
+  느려질 수 있다.
+
+  ## 해결 방향
+  - site/src/pages/robots.txt.ts 동적 엔드포인트 생성 (SITE_URL + BASE_URL 조합으로
+    sitemap 경로 생성, 도메인 전환 시 config.ts 1줄만 수정하면 자동 반영되도록 DRY 유지)
+  - User-agent: * / Allow: / + Sitemap: 절대 URL 명시
+
+  ## 완료 기준
+  - 빌드 시 dist/robots.txt 생성 확인
+  - Sitemap 경로가 실제 sitemap-index.xml 위치와 일치
+updated: '2026-07-01'
