@@ -1,6 +1,6 @@
 id: 20
 title: robots.txt 추가 — 사이트맵 발견 및 크롤링 지시
-status: in_progress
+status: closed
 priority: medium
 created: '2026-07-01'
 definition_of_done: site/dist/robots.txt가 빌드 결과물에 포함되고, sitemap-index.xml 경로를 정확히
@@ -22,3 +22,4 @@ body: |
   - 빌드 시 dist/robots.txt 생성 확인
   - Sitemap 경로가 실제 sitemap-index.xml 위치와 일치
 updated: '2026-07-01'
+closed: '2026-07-01'

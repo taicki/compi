@@ -20,12 +20,6 @@ open:
     labels:
       - branding
       - setup
-  - id: 20
-    title: robots.txt 추가 — 사이트맵 발견 및 크롤링 지시
-    status: in_progress
-    priority: medium
-    labels:
-      - seo
 blocked:
   - id: 7
     title: 도메인 구입 + nginx 독립 서비스 전환 — taicki.dev 서브패스 탈출
